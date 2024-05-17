@@ -1,0 +1,55 @@
+.lkt-accordion {
+    display: inline-flex;
+    color: var(--text-color);
+    box-shadow: var(--accordion-shadow);
+    cursor: default;
+    text-align: var(--accordion-text-align);
+    transition: var(--accordion-transition);
+    font-family: var(--accordion-font-family);
+    font-size: var(--accordion-font-size);
+    font-weight: var(--accordion-font-weight);
+    line-height: var(--accordion-line-height);
+    border-radius: var(--accordion-border-radius);
+    border-width: var(--accordion-border-width);
+    border-style: var(--accordion-border-style);
+    border-color: var(--accordion-border-color);
+    min-width: var(--accordion-min-width);
+    min-height: var(--accordion-min-height);
+    padding: var(--accordion-padding);
+}
+
+.lkt-accordion--alert {
+    background: var(--alert-color);
+    color: var(--alert-contrast);
+    border-color: var(--alert-color);
+}
+
+.lkt-accordion--danger {
+    background: var(--danger-color);
+    color: var(--danger-contrast);
+    border-color: var(--danger-color);
+}
+
+.lkt-accordion--success {
+    background: var(--success-color);
+    color: var(--success-contrast);
+    border-color: var(--success-color);
+}
+
+.lkt-accordion--info {
+    background: var(--info-color);
+    color: var(--info-contrast);
+    border-color: var(--info-color);
+}
+
+.lkt-accordion--warning {
+    background: var(--warning-color);
+    color: var(--warning-contrast);
+    border-color: var(--warning-color);
+}
+
+.lkt-accordion--target {
+    background: var(--target-color);
+    color: var(--target-contrast);
+    border-color: var(--target-color);
+}
