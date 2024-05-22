@@ -1,5 +1,8 @@
 .lkt-accordion {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--accordion-gap);
     color: var(--text-color);
     box-shadow: var(--accordion-shadow);
     cursor: default;
@@ -16,6 +19,18 @@
     min-width: var(--accordion-min-width);
     min-height: var(--accordion-min-height);
     padding: var(--accordion-padding);
+}
+
+.lkt-accordion-header {
+    background: var(--accordion-header-background);
+    padding: var(--accordion-header-padding);
+    border-radius: var(--accordion-header-border-radius);
+}
+
+.lkt-accordion-content {
+    background: var(--accordion-content-background);
+    padding: var(--accordion-content-padding);
+    border-radius: var(--accordion-content-border-radius);
 }
 
 .lkt-accordion--alert {

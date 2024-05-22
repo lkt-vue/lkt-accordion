@@ -8,12 +8,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     title: { default: "" },
     palette: { default: "" }
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "first-open"],
   setup(__props, { emit: __emit }) {
     const emits = __emit;
     const slots = useSlots();
     const props = __props;
-    const isOpen = ref(props.modelValue);
+    const isOpen = ref(props.modelValue), atLeastToggledOnce = ref(false);
+    if (isOpen.value)
+      atLeastToggledOnce.value = true;
     const classes = computed(() => {
       let r = [];
       if (props.palette)
@@ -22,9 +24,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         r.push("is-open");
       return r.join(" ");
     });
-    const toggle = () => isOpen.value = !isOpen.value;
+    const toggle = () => {
+      if (!isOpen.value && !atLeastToggledOnce.value) {
+        atLeastToggledOnce.value = true;
+      }
+      isOpen.value = !isOpen.value;
+    };
     watch(() => props.modelValue, (v) => isOpen.value = v);
     watch(isOpen, (v) => emits("update:modelValue", v));
+    watch(atLeastToggledOnce, () => emits("first-open"));
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
         class: normalizeClass(["lkt-accordion", classes.value])
@@ -39,7 +47,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           ], 64))
         ]),
         withDirectives(createElementVNode("section", _hoisted_2, [
-          renderSlot(_ctx.$slots, "default")
+          unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 0 }) : renderSlot(_ctx.$slots, "default", { key: 1 })
         ], 512), [
           [vShow, isOpen.value]
         ])
@@ -53,5 +61,5 @@ const LktAccordion = {
   }
 };
 export {
-  LktAccordion
+  LktAccordion as default
 };

@@ -8,6 +8,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
+    "first-open": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
@@ -18,12 +19,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+    "onFirst-open"?: ((...args: any[]) => any) | undefined;
 }, {
     title: string;
     modelValue: boolean;
     palette: string;
 }, {}>, {
     header?(_: {}): any;
+    "content-after-first-open"?(_: {}): any;
     default?(_: {}): any;
 }>;
 export default _default;

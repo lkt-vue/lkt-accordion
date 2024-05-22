@@ -2,7 +2,7 @@
 import {computed, ref, useSlots, watch} from "vue";
 
 // Emits
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue', 'first-open']);
 
 // Slots
 const slots = useSlots();
@@ -18,7 +18,10 @@ const props = withDefaults(defineProps<{
     palette: '',
 });
 
-const isOpen = ref(props.modelValue);
+const isOpen = ref(props.modelValue),
+    atLeastToggledOnce = ref(false);
+if (isOpen.value) atLeastToggledOnce.value = true;
+
 const classes = computed(() => {
     let r = [];
 
@@ -28,10 +31,16 @@ const classes = computed(() => {
     return r.join(' ');
 });
 
-const toggle = () => isOpen.value = !isOpen.value;
+const toggle = () => {
+    if (!isOpen.value && !atLeastToggledOnce.value) {
+        atLeastToggledOnce.value = true;
+    }
+    isOpen.value = !isOpen.value
+};
 
 watch(() => props.modelValue, (v) => isOpen.value = v);
 watch(isOpen, (v) => emits('update:modelValue', v));
+watch(atLeastToggledOnce, () => emits('first-open'));
 </script>
 
 <template>
@@ -46,7 +55,10 @@ watch(isOpen, (v) => emits('update:modelValue', v));
         </template>
     </header>
     <section class="lkt-accordion-content" v-show="isOpen">
-        <slot/>
+        <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
+            <slot name="content-after-first-open"/>
+        </template>
+        <slot v-else/>
     </section>
 </div>
 </template>
