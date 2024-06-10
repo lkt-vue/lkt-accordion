@@ -1,6 +1,6 @@
 {
   "name": "lkt-accordion",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -8,12 +8,15 @@
     ".": {
       "import": "./dist/build.js"
     },
-    "./styles": "./dist/style.css"
+    "./styles": "./dist/style.css",
+    "./theme": "./theme/default.css",
+    "./theme/default": "./theme/default.css"
   },
   "types": "./dist/index.d.ts",
   "files": [
     "dist/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "theme/**/*.css"
   ],
   "license": "MIT",
   "sideEffects": false,

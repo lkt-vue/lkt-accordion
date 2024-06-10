@@ -1,12 +1,16 @@
 import { defineComponent, useSlots, ref, computed, watch, openBlock, createElementBlock, normalizeClass, createElementVNode, unref, renderSlot, Fragment, createTextVNode, toDisplayString, withDirectives, vShow } from "vue";
-const _hoisted_1 = /* @__PURE__ */ createElementVNode("div", { "data-role": "icon" }, null, -1);
+const _hoisted_1 = {
+  key: 1,
+  "data-role": "icon"
+};
 const _hoisted_2 = { class: "lkt-accordion-content" };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "LktAccordion",
   props: {
     modelValue: { type: Boolean, default: false },
     title: { default: "" },
-    palette: { default: "" }
+    palette: { default: "" },
+    class: { default: "" }
   },
   emits: ["update:modelValue", "first-open"],
   setup(__props, { emit: __emit }) {
@@ -20,6 +24,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       let r = [];
       if (props.palette)
         r.push(`lkt-accordion--${props.palette}`);
+      if (props.class)
+        r.push(props.class);
       if (isOpen.value)
         r.push("is-open");
       return r.join(" ");
@@ -43,7 +49,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }, [
           !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
             createTextVNode(toDisplayString(_ctx.title) + " ", 1),
-            _hoisted_1
+            unref(slots)["icon"] ? renderSlot(_ctx.$slots, "icon", { key: 0 }) : (openBlock(), createElementBlock("div", _hoisted_1))
           ], 64))
         ]),
         withDirectives(createElementVNode("section", _hoisted_2, [

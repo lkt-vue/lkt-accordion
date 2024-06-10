@@ -12,10 +12,12 @@ const props = withDefaults(defineProps<{
     modelValue: boolean
     title: string
     palette: string
+    class: string
 }>(), {
     modelValue: false,
     title: '',
     palette: '',
+    class: '',
 });
 
 const isOpen = ref(props.modelValue),
@@ -26,6 +28,7 @@ const classes = computed(() => {
     let r = [];
 
     if (props.palette) r.push(`lkt-accordion--${props.palette}`);
+    if (props.class) r.push(props.class);
     if (isOpen.value) r.push('is-open');
 
     return r.join(' ');
@@ -51,7 +54,10 @@ watch(atLeastToggledOnce, () => emits('first-open'));
         </template>
         <template v-else>
             {{ title }}
-            <div data-role="icon"></div>
+            <template v-if="slots['icon']">
+                <slot name="icon"/>
+            </template>
+            <div v-else data-role="icon"></div>
         </template>
     </header>
     <section class="lkt-accordion-content" v-show="isOpen">
@@ -62,7 +68,3 @@ watch(atLeastToggledOnce, () => emits('first-open'));
     </section>
 </div>
 </template>
-
-<style scoped>
-
-</style>

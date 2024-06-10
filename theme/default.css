@@ -1,0 +1,34 @@
+:root {
+    /** Font */
+    --lkt-accordion-font-family: system-ui, Helvetica;
+    --lkt-accordion-font-size: 16px;
+    --lkt-accordion-font-weight: 300;
+    --lkt-accordion-line-height: 1.425;
+    --lkt-accordion-text-align: left;
+
+    /** Sizing */
+    --lkt-accordion-min-width: 100%;
+    --lkt-accordion-min-height: 35px;
+    --lkt-accordion-padding: 0;
+    --lkt-accordion-header-padding: 15px;
+    --lkt-accordion-content-padding: 15px;
+    --lkt-accordion-gap: 5px;
+
+    /** Border */
+    --lkt-accordion-border-radius: 5px;
+    --lkt-accordion-header-border-radius: 5px;
+    --lkt-accordion-content-border-radius: 5px;
+    --lkt-accordion-border-width: 1px;
+    --lkt-accordion-border-style: solid;
+
+    /** Colors */
+    --lkt-accordion-color: #444444;
+    --lkt-accordion-bg: transparent;
+    --lkt-accordion-header-bg: #ffffff;
+    --lkt-accordion-content-bg: transparent;
+    --lkt-accordion-border-color: #ddd;
+
+    /** Effects */
+    --lkt-accordion-shadow: none;
+    --lkt-accordion-transition: all linear 100ms;
+}
