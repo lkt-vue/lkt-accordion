@@ -13,11 +13,13 @@ const props = withDefaults(defineProps<{
     title: string
     palette: string
     class: string
+    contentClass: string
 }>(), {
     modelValue: false,
     title: '',
     palette: '',
     class: '',
+    contentClass: '',
 });
 
 const isOpen = ref(props.modelValue),
@@ -60,7 +62,7 @@ watch(atLeastToggledOnce, () => emits('first-open'));
             <div v-else data-role="icon"></div>
         </template>
     </header>
-    <section class="lkt-accordion-content" v-show="isOpen">
+    <section class="lkt-accordion-content" :class="contentClass" v-show="isOpen">
         <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
             <slot name="content-after-first-open"/>
         </template>

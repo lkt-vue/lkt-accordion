@@ -3,11 +3,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     title: string;
     palette: string;
     class: string;
+    contentClass: string;
 }>, {
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
+    contentClass: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     "first-open": (...args: any[]) => void;
@@ -16,11 +18,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     title: string;
     palette: string;
     class: string;
+    contentClass: string;
 }>, {
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
+    contentClass: string;
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onFirst-open"?: ((...args: any[]) => any) | undefined;
@@ -29,6 +33,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     class: string;
     modelValue: boolean;
     palette: string;
+    contentClass: string;
 }, {}>, {
     header?(_: {}): any;
     icon?(_: {}): any;

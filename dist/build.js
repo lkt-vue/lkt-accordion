@@ -3,14 +3,14 @@ const _hoisted_1 = {
   key: 1,
   "data-role": "icon"
 };
-const _hoisted_2 = { class: "lkt-accordion-content" };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "LktAccordion",
   props: {
     modelValue: { type: Boolean, default: false },
     title: { default: "" },
     palette: { default: "" },
-    class: { default: "" }
+    class: { default: "" },
+    contentClass: { default: "" }
   },
   emits: ["update:modelValue", "first-open"],
   setup(__props, { emit: __emit }) {
@@ -52,9 +52,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             unref(slots)["icon"] ? renderSlot(_ctx.$slots, "icon", { key: 0 }) : (openBlock(), createElementBlock("div", _hoisted_1))
           ], 64))
         ]),
-        withDirectives(createElementVNode("section", _hoisted_2, [
+        withDirectives(createElementVNode("section", {
+          class: normalizeClass(["lkt-accordion-content", _ctx.contentClass])
+        }, [
           unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 0 }) : renderSlot(_ctx.$slots, "default", { key: 1 })
-        ], 512), [
+        ], 2), [
           [vShow, isOpen.value]
         ])
       ], 2);
