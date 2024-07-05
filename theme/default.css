@@ -27,6 +27,7 @@
     --lkt-accordion-header-bg: #ffffff;
     --lkt-accordion-content-bg: transparent;
     --lkt-accordion-border-color: #ddd;
+    --lkt-accordion-header-gap: 15px;
 
     /** Effects */
     --lkt-accordion-shadow: none;

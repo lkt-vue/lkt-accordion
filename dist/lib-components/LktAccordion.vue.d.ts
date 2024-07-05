@@ -1,42 +1,89 @@
+import { LktObject } from "lkt-ts-interfaces";
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
     contentClass: string;
+    toggleIconAtEnd: boolean;
+    showActionButton: boolean;
+    actionButtonClass: string;
+    actionButtonText: string;
+    actionButtonIcon: string;
+    actionButtonResource: string;
+    actionButtonConfirm: string;
+    actionButtonConfirmData: LktObject;
+    actionButtonData: LktObject;
 }>, {
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
     contentClass: string;
+    toggleIconAtEnd: boolean;
+    showActionButton: boolean;
+    actionButtonClass: string;
+    actionButtonText: string;
+    actionButtonIcon: string;
+    actionButtonResource: string;
+    actionButtonConfirm: string;
+    actionButtonConfirmData: () => {};
+    actionButtonData: () => {};
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     "first-open": (...args: any[]) => void;
+    "click-action-button": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
     contentClass: string;
+    toggleIconAtEnd: boolean;
+    showActionButton: boolean;
+    actionButtonClass: string;
+    actionButtonText: string;
+    actionButtonIcon: string;
+    actionButtonResource: string;
+    actionButtonConfirm: string;
+    actionButtonConfirmData: LktObject;
+    actionButtonData: LktObject;
 }>, {
     modelValue: boolean;
     title: string;
     palette: string;
     class: string;
     contentClass: string;
+    toggleIconAtEnd: boolean;
+    showActionButton: boolean;
+    actionButtonClass: string;
+    actionButtonText: string;
+    actionButtonIcon: string;
+    actionButtonResource: string;
+    actionButtonConfirm: string;
+    actionButtonConfirmData: () => {};
+    actionButtonData: () => {};
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onFirst-open"?: ((...args: any[]) => any) | undefined;
+    "onClick-action-button"?: ((...args: any[]) => any) | undefined;
 }, {
     title: string;
     class: string;
     modelValue: boolean;
     palette: string;
     contentClass: string;
+    toggleIconAtEnd: boolean;
+    showActionButton: boolean;
+    actionButtonClass: string;
+    actionButtonText: string;
+    actionButtonIcon: string;
+    actionButtonResource: string;
+    actionButtonConfirm: string;
+    actionButtonConfirmData: LktObject;
+    actionButtonData: LktObject;
 }, {}>, {
     header?(_: {}): any;
-    icon?(_: {}): any;
     "content-after-first-open"?(_: {}): any;
     default?(_: {}): any;
 }>;

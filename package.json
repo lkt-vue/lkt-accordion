@@ -1,6 +1,6 @@
 {
   "name": "lkt-accordion",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -39,6 +39,9 @@
     "node": ">=18"
   },
   "dependencies": {
+    "lkt-button": "^1.1.21",
+    "lkt-i18n": "^1.0.4",
+    "lkt-ts-interfaces": "^1.0.5",
     "process": "^0.11.10",
     "sass": "^1.57.1",
     "vue": "^3.2.37"

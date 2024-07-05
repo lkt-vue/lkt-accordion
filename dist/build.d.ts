@@ -1,4 +1,5 @@
-export { LktAccordion as default };
 declare namespace LktAccordion {
-    function install(app: any, options: any): void;
+    function install(app: any): void;
 }
+export function setAccordionToggleSlot(component: any): boolean;
+export { LktAccordion as default };

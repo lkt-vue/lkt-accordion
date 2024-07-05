@@ -22,6 +22,10 @@
 }
 
 .lkt-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--lkt-accordion-header-gap);
     background: var(--lkt-accordion-header-bg);
     padding: var(--lkt-accordion-header-padding);
     border-top-left-radius: var(--lkt-accordion-header-border-radius);
@@ -33,44 +37,36 @@
     border-bottom-right-radius: var(--lkt-accordion-header-border-radius);
 }
 
+.lkt-accordion-toggle-inner {
+    display: block;
+    transition: transform ease 200ms;
+}
+
+.lkt-accordion-toggle-inner.is-opened {
+    transform: rotate(90deg);
+}
+
 .lkt-accordion-content {
-    background: var(--lkt-accordion-content-bg);
+    /*overflow: hidden;*/
+    /*max-height: 0;*/
+    transition: all linear 200ms;
+    /*transform-origin: top;*/
+    /*transform: scaleY(0);*/
+    display: none;
+}
+
+.lkt-accordion-content-inner {
     padding: var(--lkt-accordion-content-padding);
+    background: var(--lkt-accordion-content-bg);
     border-radius: var(--lkt-accordion-content-border-radius);
 }
 
-.lkt-accordion--alert {
-    background: var(--alert-color);
-    color: var(--alert-contrast);
-    border-color: var(--alert-color);
+.lkt-accordion-content-inner {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.26s ease;
 }
 
-.lkt-accordion--danger {
-    background: var(--danger-color);
-    color: var(--danger-contrast);
-    border-color: var(--danger-color);
-}
-
-.lkt-accordion--success {
-    background: var(--success-color);
-    color: var(--success-contrast);
-    border-color: var(--success-color);
-}
-
-.lkt-accordion--info {
-    background: var(--info-color);
-    color: var(--info-contrast);
-    border-color: var(--info-color);
-}
-
-.lkt-accordion--warning {
-    background: var(--warning-color);
-    color: var(--warning-contrast);
-    border-color: var(--warning-color);
-}
-
-.lkt-accordion--target {
-    background: var(--target-color);
-    color: var(--target-contrast);
-    border-color: var(--target-color);
+.lkt-accordion-content-inner.is-opened {
+    transform: scaleY(1);
 }
