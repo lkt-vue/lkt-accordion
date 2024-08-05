@@ -105,8 +105,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       emits("click-action-button", props.actionButtonData);
     };
     const calcContentStyle = () => {
-      const rect = contentInner.value.getBoundingClientRect();
-      console.log("accordion rect: ", rect);
+      contentInner.value.getBoundingClientRect();
       contentInnerStyles.value = [
         "display: block",
         "height: " + contentInner.value.offsetHeight + "px"
@@ -116,7 +115,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       nextTick(() => {
         contentInnerHeight.value = contentInner.value.clientHeight;
         const observer = new MutationObserver(() => {
-          console.log("change detected by observer");
           setTimeout(() => {
             calcContentStyle();
           }, props.toggleTimeout);

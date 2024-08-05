@@ -122,7 +122,6 @@ const onClickActionButton = () => {
 
 const calcContentStyle = () => {
     const rect = contentInner.value.getBoundingClientRect();
-    console.log('accordion rect: ', rect)
     contentInnerStyles.value = [
         'display: block',
         'height: ' + contentInner.value.offsetHeight + 'px',
@@ -135,7 +134,6 @@ onMounted(() => {
         contentInnerHeight.value = contentInner.value.clientHeight;
 
         const observer = new MutationObserver(() => {
-            console.log('change detected by observer')
             setTimeout(() => {
                 calcContentStyle()
             }, props.toggleTimeout);
