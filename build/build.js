@@ -1,4 +1,4 @@
-import { defineComponent, useSlots, ref, computed, watch, onMounted, nextTick, resolveComponent, openBlock, createElementBlock, normalizeClass, createElementVNode, unref, renderSlot, Fragment, createBlock, resolveDynamicComponent, createCommentVNode, toDisplayString, createVNode, normalizeStyle } from "vue";
+import { defineComponent, useSlots, ref, computed, watch, onMounted, nextTick, onBeforeUnmount, resolveComponent, openBlock, createElementBlock, normalizeClass, createElementVNode, unref, renderSlot, Fragment, createBlock, resolveDynamicComponent, createCommentVNode, toDisplayString, createVNode, normalizeStyle } from "vue";
 import { __ } from "lkt-i18n";
 const _Settings = class _Settings {
 };
@@ -29,6 +29,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     palette: { default: "" },
     class: { default: "" },
     contentClass: { default: "" },
+    toggleMode: { default: "height" },
+    toggleTimeout: { default: 0 },
     toggleIconAtEnd: { type: Boolean, default: false },
     showActionButton: { type: Boolean, default: false },
     actionButtonClass: { default: "" },
@@ -44,7 +46,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const emits = __emit;
     const slots = useSlots();
     const props = __props;
-    const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false);
+    const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerObserver = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false), contentInnerStyles = ref("");
     if (isOpen.value)
       atLeastToggledOnce.value = true;
     const classes = computed(() => {
@@ -55,6 +57,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         r.push(props.class);
       if (isOpen.value)
         r.push("is-open");
+      if (props.toggleMode)
+        r.push(`toggle-mode--${props.toggleMode}`);
       return r.join(" ");
     }), contentInnerClasses = computed(() => {
       let r = [];
@@ -66,7 +70,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     }), contentInnerStyle = computed(() => {
       if (!isOpen.value)
         return "";
-      return "display: block;";
+      return contentInnerStyles.value;
     }), computedLabel = computed(() => {
       if (props.title.startsWith("__:")) {
         return __(props.title.substring(3));
@@ -82,6 +86,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         atLeastToggledOnce.value = true;
       }
       isOpen.value = !isOpen.value;
+      calcContentStyle();
     };
     watch(() => props.modelValue, (v) => isOpen.value = v);
     watch(isOpen, (v) => {
@@ -99,10 +104,33 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const onClickActionButton = () => {
       emits("click-action-button", props.actionButtonData);
     };
+    const calcContentStyle = () => {
+      const rect = contentInner.value.getBoundingClientRect();
+      console.log("accordion rect: ", rect);
+      contentInnerStyles.value = [
+        "display: block",
+        "height: " + contentInner.value.offsetHeight + "px"
+      ].join(";");
+    };
     onMounted(() => {
       nextTick(() => {
         contentInnerHeight.value = contentInner.value.clientHeight;
+        const observer = new MutationObserver(() => {
+          console.log("change detected by observer");
+          setTimeout(() => {
+            calcContentStyle();
+          }, props.toggleTimeout);
+        });
+        observer.observe(contentInner.value, {
+          childList: true,
+          subtree: true,
+          attributes: true
+        });
+        contentInnerObserver.value = observer;
       });
+    });
+    onBeforeUnmount(() => {
+      contentInnerObserver.value.disconnect();
     });
     return (_ctx, _cache) => {
       const _component_lkt_button = resolveComponent("lkt-button");

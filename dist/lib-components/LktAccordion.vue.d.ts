@@ -5,6 +5,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
+    toggleMode: "height" | "transform";
+    toggleTimeout: number;
     toggleIconAtEnd: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -20,6 +22,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
+    toggleMode: string;
+    toggleTimeout: number;
     toggleIconAtEnd: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -39,6 +43,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
+    toggleMode: "height" | "transform";
+    toggleTimeout: number;
     toggleIconAtEnd: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -54,6 +60,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
+    toggleMode: string;
+    toggleTimeout: number;
     toggleIconAtEnd: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -73,6 +81,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     modelValue: boolean;
     palette: string;
     contentClass: string;
+    toggleMode: "height" | "transform";
+    toggleTimeout: number;
     toggleIconAtEnd: boolean;
     showActionButton: boolean;
     actionButtonClass: string;

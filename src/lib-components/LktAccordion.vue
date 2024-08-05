@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, nextTick, onMounted, ref, useSlots, watch} from "vue";
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch} from "vue";
 import {LktObject} from "lkt-ts-interfaces";
 import {Settings} from "../settings/Settings";
 import {__} from "lkt-i18n";
@@ -17,6 +17,8 @@ const props = withDefaults(defineProps<{
     palette: string
     class: string
     contentClass: string
+    toggleMode: 'transform' | 'height'
+    toggleTimeout: number
     toggleIconAtEnd: boolean
     showActionButton: boolean
     actionButtonClass: string
@@ -32,6 +34,8 @@ const props = withDefaults(defineProps<{
     palette: '',
     class: '',
     contentClass: '',
+    toggleMode: 'height',
+    toggleTimeout: 0,
     toggleIconAtEnd: false,
     showActionButton: false,
     actionButtonClass: '',
@@ -46,8 +50,10 @@ const props = withDefaults(defineProps<{
 const isOpen = ref(props.modelValue),
     renderContent = ref(props.modelValue),
     contentInner = ref(null),
+    contentInnerObserver = ref(null),
     contentInnerHeight = ref(0),
-    atLeastToggledOnce = ref(false);
+    atLeastToggledOnce = ref(false),
+    contentInnerStyles = ref('');
 
 if (isOpen.value) atLeastToggledOnce.value = true;
 
@@ -57,6 +63,7 @@ const classes = computed(() => {
         if (props.palette) r.push(`lkt-accordion--${props.palette}`);
         if (props.class) r.push(props.class);
         if (isOpen.value) r.push('is-open');
+        if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
 
         return r.join(' ');
     }),
@@ -70,7 +77,7 @@ const classes = computed(() => {
     }),
     contentInnerStyle = computed(() => {
         if (!isOpen.value) return '';
-        return 'display: block;'
+        return contentInnerStyles.value;
         // return 'max-height: ' + contentInnerHeight.value;
     }),
     computedLabel = computed(() => {
@@ -91,6 +98,7 @@ const toggle = () => {
         atLeastToggledOnce.value = true;
     }
     isOpen.value = !isOpen.value
+    calcContentStyle();
 };
 
 watch(() => props.modelValue, (v) => isOpen.value = v);
@@ -112,11 +120,37 @@ const onClickActionButton = () => {
     emits('click-action-button', props.actionButtonData);
 }
 
+const calcContentStyle = () => {
+    const rect = contentInner.value.getBoundingClientRect();
+    console.log('accordion rect: ', rect)
+    contentInnerStyles.value = [
+        'display: block',
+        'height: ' + contentInner.value.offsetHeight + 'px',
+    ].join(';');
+}
+
 onMounted(() => {
     nextTick(() => {
         //@ts-ignore
         contentInnerHeight.value = contentInner.value.clientHeight;
+
+        const observer = new MutationObserver(() => {
+            console.log('change detected by observer')
+            setTimeout(() => {
+                calcContentStyle()
+            }, props.toggleTimeout);
+        });
+        observer.observe(contentInner.value, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+        });
+        contentInnerObserver.value = observer;
     })
+})
+
+onBeforeUnmount(() => {
+    contentInnerObserver.value.disconnect();
 })
 </script>
 
