@@ -147,8 +147,13 @@ onMounted(() => {
     })
 })
 
+onMounted(() => {
+    window.addEventListener('resize', calcContentStyle);
+})
+
 onBeforeUnmount(() => {
     contentInnerObserver.value.disconnect();
+    window.removeEventListener('resize', calcContentStyle);
 })
 </script>
 

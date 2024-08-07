@@ -127,8 +127,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         contentInnerObserver.value = observer;
       });
     });
+    onMounted(() => {
+      window.addEventListener("resize", calcContentStyle);
+    });
     onBeforeUnmount(() => {
       contentInnerObserver.value.disconnect();
+      window.removeEventListener("resize", calcContentStyle);
     });
     return (_ctx, _cache) => {
       const _component_lkt_button = resolveComponent("lkt-button");
