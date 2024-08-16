@@ -63,6 +63,7 @@ const classes = computed(() => {
         if (props.palette) r.push(`lkt-accordion--${props.palette}`);
         if (props.class) r.push(props.class);
         if (isOpen.value) r.push('is-open');
+        if (props.toggleIconAtEnd) r.push('icon-at-end');
         if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
 
         return r.join(' ');

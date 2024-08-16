@@ -32,6 +32,10 @@
     border-top-right-radius: var(--lkt-accordion-header-border-radius);
 }
 
+.icon-at-end .lkt-accordion-header {
+    justify-content: space-between;
+}
+
 .lkt-accordion:not(.is-open) .lkt-accordion-header {
     border-bottom-left-radius: var(--lkt-accordion-header-border-radius);
     border-bottom-right-radius: var(--lkt-accordion-header-border-radius);
