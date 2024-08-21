@@ -27,6 +27,8 @@
     justify-content: flex-start;
     gap: var(--lkt-accordion-header-gap);
     background: var(--lkt-accordion-header-bg);
+    font-weight: var(--lkt-accordion-header-font-weight);
+    color: var(--lkt-accordion-header-color);
     padding: var(--lkt-accordion-header-padding);
     border-top-left-radius: var(--lkt-accordion-header-border-radius);
     border-top-right-radius: var(--lkt-accordion-header-border-radius);
