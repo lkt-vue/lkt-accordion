@@ -161,42 +161,40 @@ onBeforeUnmount(() => {
 <template>
     <div class="lkt-accordion" :class="classes">
         <header class="lkt-accordion-header" @click="toggle">
+            <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd">
+                <template v-if="hasToggleSlot">
+                    <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
+                </template>
+                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
+            </div>
 
-            <template v-if="!!slots.header">
-                <slot name="header"/>
-            </template>
-
-            <template v-else>
-                <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd">
-                    <template v-if="hasToggleSlot">
-                        <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
-                    </template>
-                    <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
-                </div>
-
-                <div class="lkt-accordion-title" v-if="computedLabel.length > 0">
+            <div class="lkt-accordion-title" v-if="!!slots.header || computedLabel.length > 0">
+                <template v-if="!!slots.header">
+                    <slot name="header"/>
+                </template>
+                <template v-else-if="computedLabel.length > 0">
                     {{computedLabel}}
-                </div>
+                </template>
+            </div>
 
-                <div class="lkt-accordion-buttons" v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
-                    <lkt-button
-                        :class="actionButtonClass"
-                        :confirm-data="actionButtonConfirmData"
-                        :confirm-modal="actionButtonConfirm"
-                        :icon="actionButtonIcon"
-                        :resource="actionButtonResource"
-                        :text="actionButtonText"
-                        @click="onClickActionButton"
-                    />
-                </div>
+            <div class="lkt-accordion-buttons" v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
+                <lkt-button
+                    :class="actionButtonClass"
+                    :confirm-data="actionButtonConfirmData"
+                    :confirm-modal="actionButtonConfirm"
+                    :icon="actionButtonIcon"
+                    :resource="actionButtonResource"
+                    :text="actionButtonText"
+                    @click="onClickActionButton"
+                />
+            </div>
 
-                <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd">
-                    <template v-if="hasToggleSlot">
-                        <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
-                    </template>
-                    <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
-                </div>
-            </template>
+            <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd">
+                <template v-if="hasToggleSlot">
+                    <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
+                </template>
+                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
+            </div>
         </header>
         <section class="lkt-accordion-content" :style="contentInnerStyle">
             <div class="lkt-accordion-content-inner" ref="contentInner" :class="contentInnerClasses">
