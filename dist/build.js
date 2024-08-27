@@ -32,6 +32,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     toggleMode: { default: "height" },
     toggleTimeout: { default: 0 },
     toggleIconAtEnd: { type: Boolean, default: false },
+    alwaysOpen: { type: Boolean, default: false },
     showActionButton: { type: Boolean, default: false },
     actionButtonClass: { default: "" },
     actionButtonText: { default: "" },
@@ -39,7 +40,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     actionButtonResource: { default: "" },
     actionButtonConfirm: { default: "" },
     actionButtonConfirmData: { default: () => ({}) },
-    actionButtonData: { default: () => ({}) }
+    actionButtonData: { default: () => ({}) },
+    iconRotation: { default: "90" }
   },
   emits: ["update:modelValue", "first-open", "click-action-button"],
   setup(__props, { emit: __emit }) {
@@ -47,6 +49,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const slots = useSlots();
     const props = __props;
     const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerObserver = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false), contentInnerStyles = ref("");
+    if (props.alwaysOpen && !isOpen.value) {
+      isOpen.value = true;
+    }
     if (isOpen.value)
       atLeastToggledOnce.value = true;
     const classes = computed(() => {
@@ -61,6 +66,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         r.push("icon-at-end");
       if (props.toggleMode)
         r.push(`toggle-mode--${props.toggleMode}`);
+      if (props.iconRotation)
+        r.push(`icon-rotation--${props.iconRotation}`);
       return r.join(" ");
     }), contentInnerClasses = computed(() => {
       let r = [];
@@ -84,6 +91,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       return Settings.toggleSlot;
     });
     const toggle = () => {
+      if (props.alwaysOpen)
+        return;
       if (!isOpen.value && !atLeastToggledOnce.value) {
         atLeastToggledOnce.value = true;
       }
@@ -107,7 +116,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       emits("click-action-button", props.actionButtonData);
     };
     const calcContentStyle = () => {
-      contentInner.value.getBoundingClientRect();
+      if (props.toggleMode === "display") {
+        return;
+      }
       contentInnerStyles.value = [
         "display: block",
         "height: " + contentInner.value.offsetHeight + "px"
@@ -145,7 +156,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           class: "lkt-accordion-header",
           onClick: toggle
         }, [
-          !_ctx.toggleIconAtEnd ? (openBlock(), createElementBlock("div", _hoisted_1, [
+          !_ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_1, [
             hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
               key: 0,
               class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])
@@ -170,7 +181,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               onClick: onClickActionButton
             }, null, 8, ["class", "confirm-data", "confirm-modal", "icon", "resource", "text"])
           ])) : createCommentVNode("", true),
-          _ctx.toggleIconAtEnd ? (openBlock(), createElementBlock("div", _hoisted_4, [
+          _ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_4, [
             hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
               key: 0,
               class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])

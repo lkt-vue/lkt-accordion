@@ -5,9 +5,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
-    toggleMode: "height" | "transform";
+    toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
     actionButtonText: string;
@@ -16,6 +17,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirm: string;
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
+    iconRotation: "90" | "180" | "-90" | "-180";
 }>, {
     modelValue: boolean;
     title: string;
@@ -25,6 +27,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     toggleMode: string;
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
     actionButtonText: string;
@@ -33,6 +36,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirm: string;
     actionButtonConfirmData: () => {};
     actionButtonData: () => {};
+    iconRotation: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     "first-open": (...args: any[]) => void;
@@ -43,9 +47,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     palette: string;
     class: string;
     contentClass: string;
-    toggleMode: "height" | "transform";
+    toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
     actionButtonText: string;
@@ -54,6 +59,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirm: string;
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
+    iconRotation: "90" | "180" | "-90" | "-180";
 }>, {
     modelValue: boolean;
     title: string;
@@ -63,6 +69,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     toggleMode: string;
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
     actionButtonText: string;
@@ -71,6 +78,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirm: string;
     actionButtonConfirmData: () => {};
     actionButtonData: () => {};
+    iconRotation: string;
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onFirst-open"?: ((...args: any[]) => any) | undefined;
@@ -81,9 +89,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     modelValue: boolean;
     palette: string;
     contentClass: string;
-    toggleMode: "height" | "transform";
+    toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
     actionButtonText: string;
@@ -92,6 +101,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirm: string;
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
+    iconRotation: "90" | "180" | "-90" | "-180";
 }, {}>, {
     header?(_: {}): any;
     "content-after-first-open"?(_: {}): any;

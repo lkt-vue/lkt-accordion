@@ -52,6 +52,19 @@
     transform: rotate(90deg);
 }
 
+.icon-rotation--90 .lkt-accordion-toggle-inner.is-opened {
+    transform: rotate(90deg);
+}
+.icon-rotation--180 .lkt-accordion-toggle-inner.is-opened {
+    transform: rotate(180deg);
+}
+.icon-rotation---90 .lkt-accordion-toggle-inner.is-opened {
+    transform: rotate(-90deg);
+}
+.icon-rotation---180 .lkt-accordion-toggle-inner.is-opened {
+    transform: rotate(-180deg);
+}
+
 .lkt-accordion-content-inner {
     padding: var(--lkt-accordion-content-padding);
     background: var(--lkt-accordion-content-bg);
@@ -77,4 +90,12 @@
 
 .toggle-mode--transform .lkt-accordion-content-inner.is-opened {
     transform: scaleY(1);
+}
+
+.toggle-mode--display .lkt-accordion-content-inner {
+    display: none;
+}
+
+.toggle-mode--display .lkt-accordion-content-inner.is-opened {
+    display: block;
 }

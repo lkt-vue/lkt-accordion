@@ -17,9 +17,10 @@ const props = withDefaults(defineProps<{
     palette: string
     class: string
     contentClass: string
-    toggleMode: 'transform' | 'height'
+    toggleMode: 'transform' | 'height' | 'display'
     toggleTimeout: number
     toggleIconAtEnd: boolean
+    alwaysOpen: boolean
     showActionButton: boolean
     actionButtonClass: string
     actionButtonText: string
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<{
     actionButtonConfirm: string
     actionButtonConfirmData: LktObject
     actionButtonData: LktObject
+    iconRotation: '90' | '180' | '-90' | '-180'
 }>(), {
     modelValue: false,
     title: '',
@@ -37,6 +39,7 @@ const props = withDefaults(defineProps<{
     toggleMode: 'height',
     toggleTimeout: 0,
     toggleIconAtEnd: false,
+    alwaysOpen: false,
     showActionButton: false,
     actionButtonClass: '',
     actionButtonText: '',
@@ -45,6 +48,7 @@ const props = withDefaults(defineProps<{
     actionButtonConfirm: '',
     actionButtonConfirmData: () => ({}),
     actionButtonData: () => ({}),
+    iconRotation: '90',
 });
 
 const isOpen = ref(props.modelValue),
@@ -54,6 +58,10 @@ const isOpen = ref(props.modelValue),
     contentInnerHeight = ref(0),
     atLeastToggledOnce = ref(false),
     contentInnerStyles = ref('');
+
+if (props.alwaysOpen && !isOpen.value) {
+    isOpen.value = true;
+}
 
 if (isOpen.value) atLeastToggledOnce.value = true;
 
@@ -65,6 +73,7 @@ const classes = computed(() => {
         if (isOpen.value) r.push('is-open');
         if (props.toggleIconAtEnd) r.push('icon-at-end');
         if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
+        if (props.iconRotation) r.push(`icon-rotation--${props.iconRotation}`);
 
         return r.join(' ');
     }),
@@ -95,6 +104,7 @@ const classes = computed(() => {
     });
 
 const toggle = () => {
+    if (props.alwaysOpen) return;
     if (!isOpen.value && !atLeastToggledOnce.value) {
         atLeastToggledOnce.value = true;
     }
@@ -122,7 +132,10 @@ const onClickActionButton = () => {
 }
 
 const calcContentStyle = () => {
-    const rect = contentInner.value.getBoundingClientRect();
+    if (props.toggleMode === 'display') {
+        return;
+    }
+
     contentInnerStyles.value = [
         'display: block',
         'height: ' + contentInner.value.offsetHeight + 'px',
@@ -161,7 +174,7 @@ onBeforeUnmount(() => {
 <template>
     <div class="lkt-accordion" :class="classes">
         <header class="lkt-accordion-header" @click="toggle">
-            <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd">
+            <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && !alwaysOpen">
                 <template v-if="hasToggleSlot">
                     <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
                 </template>
@@ -189,7 +202,7 @@ onBeforeUnmount(() => {
                 />
             </div>
 
-            <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd">
+            <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd && !alwaysOpen">
                 <template v-if="hasToggleSlot">
                     <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
                 </template>
