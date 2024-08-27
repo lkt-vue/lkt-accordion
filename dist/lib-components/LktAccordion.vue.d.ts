@@ -2,12 +2,14 @@ import { LktObject } from "lkt-ts-interfaces";
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
+    icon: string;
     palette: string;
     class: string;
     contentClass: string;
     toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    iconAtEnd: boolean;
     alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -21,12 +23,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }>, {
     modelValue: boolean;
     title: string;
+    icon: string;
     palette: string;
     class: string;
     contentClass: string;
     toggleMode: string;
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    iconAtEnd: boolean;
     alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -44,12 +48,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
+    icon: string;
     palette: string;
     class: string;
     contentClass: string;
     toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    iconAtEnd: boolean;
     alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -63,12 +69,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }>, {
     modelValue: boolean;
     title: string;
+    icon: string;
     palette: string;
     class: string;
     contentClass: string;
     toggleMode: string;
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    iconAtEnd: boolean;
     alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;
@@ -86,12 +94,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }, {
     title: string;
     class: string;
+    icon: string;
     modelValue: boolean;
     palette: string;
     contentClass: string;
     toggleMode: "height" | "display" | "transform";
     toggleTimeout: number;
     toggleIconAtEnd: boolean;
+    iconAtEnd: boolean;
     alwaysOpen: boolean;
     showActionButton: boolean;
     actionButtonClass: string;

@@ -14,12 +14,14 @@ const slots = useSlots();
 const props = withDefaults(defineProps<{
     modelValue: boolean
     title: string
+    icon: string
     palette: string
     class: string
     contentClass: string
     toggleMode: 'transform' | 'height' | 'display'
     toggleTimeout: number
     toggleIconAtEnd: boolean
+    iconAtEnd: boolean
     alwaysOpen: boolean
     showActionButton: boolean
     actionButtonClass: string
@@ -33,12 +35,14 @@ const props = withDefaults(defineProps<{
 }>(), {
     modelValue: false,
     title: '',
+    icon: '',
     palette: '',
     class: '',
     contentClass: '',
     toggleMode: 'height',
     toggleTimeout: 0,
     toggleIconAtEnd: false,
+    iconAtEnd: false,
     alwaysOpen: false,
     showActionButton: false,
     actionButtonClass: '',
@@ -186,7 +190,9 @@ onBeforeUnmount(() => {
                     <slot name="header"/>
                 </template>
                 <template v-else-if="computedLabel.length > 0">
+                    <i v-if="icon && !iconAtEnd" :class="icon"/>
                     {{computedLabel}}
+                    <i v-if="icon && iconAtEnd" :class="icon"/>
                 </template>
             </div>
 

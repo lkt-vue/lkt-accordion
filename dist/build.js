@@ -26,12 +26,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   props: {
     modelValue: { type: Boolean, default: false },
     title: { default: "" },
+    icon: { default: "" },
     palette: { default: "" },
     class: { default: "" },
     contentClass: { default: "" },
     toggleMode: { default: "height" },
     toggleTimeout: { default: 0 },
     toggleIconAtEnd: { type: Boolean, default: false },
+    iconAtEnd: { type: Boolean, default: false },
     alwaysOpen: { type: Boolean, default: false },
     showActionButton: { type: Boolean, default: false },
     actionButtonClass: { default: "" },
@@ -167,7 +169,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           ])) : createCommentVNode("", true),
           !!unref(slots).header || computedLabel.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_2, [
             !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : computedLabel.value.length > 0 ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-              createTextVNode(toDisplayString(computedLabel.value), 1)
+              _ctx.icon && !_ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
+                key: 0,
+                class: normalizeClass(_ctx.icon)
+              }, null, 2)) : createCommentVNode("", true),
+              createTextVNode(" " + toDisplayString(computedLabel.value) + " ", 1),
+              _ctx.icon && _ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
+                key: 1,
+                class: normalizeClass(_ctx.icon)
+              }, null, 2)) : createCommentVNode("", true)
             ], 64)) : createCommentVNode("", true)
           ])) : createCommentVNode("", true),
           _ctx.showActionButton && (_ctx.actionButtonText !== "" || _ctx.actionButtonIcon !== "") ? (openBlock(), createElementBlock("div", _hoisted_3, [
