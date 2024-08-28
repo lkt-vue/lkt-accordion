@@ -32,6 +32,8 @@ const props = withDefaults(defineProps<{
     actionButtonConfirmData: LktObject
     actionButtonData: LktObject
     iconRotation: '90' | '180' | '-90' | '-180'
+    minHeight: number | undefined
+    toggleOnClickIntro: boolean
 }>(), {
     modelValue: false,
     title: '',
@@ -53,6 +55,8 @@ const props = withDefaults(defineProps<{
     actionButtonConfirmData: () => ({}),
     actionButtonData: () => ({}),
     iconRotation: '90',
+    minHeight: undefined,
+    toggleOnClickIntro: false,
 });
 
 const isOpen = ref(props.modelValue),
@@ -61,7 +65,8 @@ const isOpen = ref(props.modelValue),
     contentInnerObserver = ref(null),
     contentInnerHeight = ref(0),
     atLeastToggledOnce = ref(false),
-    contentInnerStyles = ref('');
+    contentInnerStyles = ref(''),
+    blurLayerRequired = ref(false);
 
 if (props.alwaysOpen && !isOpen.value) {
     isOpen.value = true;
@@ -81,6 +86,12 @@ const classes = computed(() => {
 
         return r.join(' ');
     }),
+    contentClasses = computed(() => {
+        let r = [];
+        if (blurLayerRequired.value && !isOpen.value) r.push('lkt-accordion-blur-layer');
+
+        return r.join(' ');
+    }),
     contentInnerClasses = computed(() => {
         let r = [];
 
@@ -90,9 +101,11 @@ const classes = computed(() => {
         return r.join(' ');
     }),
     contentInnerStyle = computed(() => {
-        if (!isOpen.value) return '';
+        if (!isOpen.value) {
+            if (typeof props.minHeight === 'undefined') return '';
+
+        }
         return contentInnerStyles.value;
-        // return 'max-height: ' + contentInnerHeight.value;
     }),
     computedLabel = computed(() => {
         if (props.title.startsWith('__:')) {
@@ -108,18 +121,27 @@ const classes = computed(() => {
     });
 
 const toggle = () => {
-    if (props.alwaysOpen) return;
-    if (!isOpen.value && !atLeastToggledOnce.value) {
-        atLeastToggledOnce.value = true;
-    }
-    isOpen.value = !isOpen.value
-    calcContentStyle();
-};
+        if (props.alwaysOpen) return;
+        if (!isOpen.value && !atLeastToggledOnce.value) {
+            atLeastToggledOnce.value = true;
+        }
+        isOpen.value = !isOpen.value
+        calcContentStyle();
+    },
+    onClickReadMoreIntro = () => {
+        if (props.toggleOnClickIntro) {
+            toggle();
+        }
+    };
 
 watch(() => props.modelValue, (v) => isOpen.value = v);
 watch(isOpen, (v) => {
     if (!v) {
-        renderContent.value = false;
+        //@ts-ignore
+        contentInnerHeight.value = Number(props.minHeight);
+        setTimeout(() => {
+            renderContent.value = true;
+        }, 1)
     } else {
         //@ts-ignore
         contentInnerHeight.value = contentInner.value.clientHeight;
@@ -140,9 +162,20 @@ const calcContentStyle = () => {
         return;
     }
 
+    blurLayerRequired.value = false;
+
+    let contentHeight = contentInner.value.offsetHeight,
+        minHeight = Number(props.minHeight);
+    let height = contentHeight;
+
+    if (!isOpen.value && minHeight < contentHeight) {
+        height = minHeight;
+        blurLayerRequired.value = true;
+    }
+
     contentInnerStyles.value = [
         'display: block',
-        'height: ' + contentInner.value.offsetHeight + 'px',
+        'height: ' + height + 'px',
     ].join(';');
 }
 
@@ -162,6 +195,8 @@ onMounted(() => {
             attributes: true,
         });
         contentInnerObserver.value = observer;
+
+        calcContentStyle();
     })
 })
 
@@ -182,7 +217,8 @@ onBeforeUnmount(() => {
                 <template v-if="hasToggleSlot">
                     <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
                 </template>
-                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
+                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
+                     :class="isOpen ? 'is-opened' : '' "/>
             </div>
 
             <div class="lkt-accordion-title" v-if="!!slots.header || computedLabel.length > 0">
@@ -191,12 +227,13 @@ onBeforeUnmount(() => {
                 </template>
                 <template v-else-if="computedLabel.length > 0">
                     <i v-if="icon && !iconAtEnd" :class="icon"/>
-                    {{computedLabel}}
+                    {{ computedLabel }}
                     <i v-if="icon && iconAtEnd" :class="icon"/>
                 </template>
             </div>
 
-            <div class="lkt-accordion-buttons" v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
+            <div class="lkt-accordion-buttons"
+                 v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
                 <lkt-button
                     :class="actionButtonClass"
                     :confirm-data="actionButtonConfirmData"
@@ -212,11 +249,17 @@ onBeforeUnmount(() => {
                 <template v-if="hasToggleSlot">
                     <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
                 </template>
-                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle" :class="isOpen ? 'is-opened' : '' "/>
+                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
+                     :class="isOpen ? 'is-opened' : '' "/>
             </div>
         </header>
-        <section class="lkt-accordion-content" :style="contentInnerStyle">
+        <section class="lkt-accordion-content" :style="contentInnerStyle" :class="contentClasses">
             <div class="lkt-accordion-content-inner" ref="contentInner" :class="contentInnerClasses">
+                <template v-if="slots['read-more-content']">
+                    <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
+                        <slot name="read-more-content"/>
+                    </section>
+                </template>
                 <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
                     <slot name="content-after-first-open"/>
                 </template>

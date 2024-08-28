@@ -43,14 +43,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     actionButtonConfirm: { default: "" },
     actionButtonConfirmData: { default: () => ({}) },
     actionButtonData: { default: () => ({}) },
-    iconRotation: { default: "90" }
+    iconRotation: { default: "90" },
+    minHeight: { default: void 0 },
+    toggleOnClickIntro: { type: Boolean, default: false }
   },
   emits: ["update:modelValue", "first-open", "click-action-button"],
   setup(__props, { emit: __emit }) {
     const emits = __emit;
     const slots = useSlots();
     const props = __props;
-    const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerObserver = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false), contentInnerStyles = ref("");
+    const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerObserver = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false), contentInnerStyles = ref(""), blurLayerRequired = ref(false);
     if (props.alwaysOpen && !isOpen.value) {
       isOpen.value = true;
     }
@@ -71,6 +73,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (props.iconRotation)
         r.push(`icon-rotation--${props.iconRotation}`);
       return r.join(" ");
+    }), contentClasses = computed(() => {
+      let r = [];
+      if (blurLayerRequired.value && !isOpen.value)
+        r.push("lkt-accordion-blur-layer");
+      return r.join(" ");
     }), contentInnerClasses = computed(() => {
       let r = [];
       if (props.contentClass)
@@ -79,8 +86,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         r.push("is-opened");
       return r.join(" ");
     }), contentInnerStyle = computed(() => {
-      if (!isOpen.value)
-        return "";
+      if (!isOpen.value) {
+        if (typeof props.minHeight === "undefined")
+          return "";
+      }
       return contentInnerStyles.value;
     }), computedLabel = computed(() => {
       if (props.title.startsWith("__:")) {
@@ -100,11 +109,18 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
       isOpen.value = !isOpen.value;
       calcContentStyle();
+    }, onClickReadMoreIntro = () => {
+      if (props.toggleOnClickIntro) {
+        toggle();
+      }
     };
     watch(() => props.modelValue, (v) => isOpen.value = v);
     watch(isOpen, (v) => {
       if (!v) {
-        renderContent.value = false;
+        contentInnerHeight.value = Number(props.minHeight);
+        setTimeout(() => {
+          renderContent.value = true;
+        }, 1);
       } else {
         contentInnerHeight.value = contentInner.value.clientHeight;
         setTimeout(() => {
@@ -121,9 +137,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (props.toggleMode === "display") {
         return;
       }
+      blurLayerRequired.value = false;
+      let contentHeight = contentInner.value.offsetHeight, minHeight = Number(props.minHeight);
+      let height = contentHeight;
+      if (!isOpen.value && minHeight < contentHeight) {
+        height = minHeight;
+        blurLayerRequired.value = true;
+      }
       contentInnerStyles.value = [
         "display: block",
-        "height: " + contentInner.value.offsetHeight + "px"
+        "height: " + height + "px"
       ].join(";");
     };
     onMounted(() => {
@@ -140,6 +163,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           attributes: true
         });
         contentInnerObserver.value = observer;
+        calcContentStyle();
       });
     });
     onMounted(() => {
@@ -202,7 +226,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           ])) : createCommentVNode("", true)
         ]),
         createElementVNode("section", {
-          class: "lkt-accordion-content",
+          class: normalizeClass(["lkt-accordion-content", contentClasses.value]),
           style: normalizeStyle(contentInnerStyle.value)
         }, [
           createElementVNode("div", {
@@ -210,9 +234,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             ref_key: "contentInner",
             ref: contentInner
           }, [
-            unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 0 }) : renderSlot(_ctx.$slots, "default", { key: 1 })
+            unref(slots)["read-more-content"] ? (openBlock(), createElementBlock("section", {
+              key: 0,
+              class: "lkt-accordion-read-more-intro",
+              onClick: onClickReadMoreIntro
+            }, [
+              renderSlot(_ctx.$slots, "read-more-content")
+            ])) : createCommentVNode("", true),
+            unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 1 }) : renderSlot(_ctx.$slots, "default", { key: 2 })
           ], 2)
-        ], 4)
+        ], 6)
       ], 2);
     };
   }

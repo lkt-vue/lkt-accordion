@@ -20,6 +20,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
     iconRotation: "90" | "180" | "-90" | "-180";
+    minHeight: number | undefined;
+    toggleOnClickIntro: boolean;
 }>, {
     modelValue: boolean;
     title: string;
@@ -41,6 +43,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirmData: () => {};
     actionButtonData: () => {};
     iconRotation: string;
+    minHeight: undefined;
+    toggleOnClickIntro: boolean;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     "first-open": (...args: any[]) => void;
@@ -66,6 +70,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
     iconRotation: "90" | "180" | "-90" | "-180";
+    minHeight: number | undefined;
+    toggleOnClickIntro: boolean;
 }>, {
     modelValue: boolean;
     title: string;
@@ -87,11 +93,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirmData: () => {};
     actionButtonData: () => {};
     iconRotation: string;
+    minHeight: undefined;
+    toggleOnClickIntro: boolean;
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onFirst-open"?: ((...args: any[]) => any) | undefined;
     "onClick-action-button"?: ((...args: any[]) => any) | undefined;
 }, {
+    minHeight: number | undefined;
     title: string;
     class: string;
     icon: string;
@@ -112,8 +121,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonConfirmData: LktObject;
     actionButtonData: LktObject;
     iconRotation: "90" | "180" | "-90" | "-180";
+    toggleOnClickIntro: boolean;
 }, {}>, {
     header?(_: {}): any;
+    "read-more-content"?(_: {}): any;
     "content-after-first-open"?(_: {}): any;
     default?(_: {}): any;
 }>;
