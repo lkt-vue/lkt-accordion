@@ -22,6 +22,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     iconRotation: "90" | "180" | "-90" | "-180";
     minHeight: number | undefined;
     toggleOnClickIntro: boolean;
+    buttonIconClass: string;
+    buttonIconOn: string;
+    buttonIconOff: string;
+    buttonTextOn: string;
+    buttonTextOff: string;
 }>, {
     modelValue: boolean;
     title: string;
@@ -45,10 +50,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     iconRotation: string;
     minHeight: undefined;
     toggleOnClickIntro: boolean;
+    buttonIconClass: string;
+    buttonIconOn: string;
+    buttonIconOff: string;
+    buttonTextOn: string;
+    buttonTextOff: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     "first-open": (...args: any[]) => void;
     "click-action-button": (...args: any[]) => void;
+    "user-toggle": (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     modelValue: boolean;
     title: string;
@@ -72,6 +83,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     iconRotation: "90" | "180" | "-90" | "-180";
     minHeight: number | undefined;
     toggleOnClickIntro: boolean;
+    buttonIconClass: string;
+    buttonIconOn: string;
+    buttonIconOff: string;
+    buttonTextOn: string;
+    buttonTextOff: string;
 }>, {
     modelValue: boolean;
     title: string;
@@ -95,10 +111,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     iconRotation: string;
     minHeight: undefined;
     toggleOnClickIntro: boolean;
+    buttonIconClass: string;
+    buttonIconOn: string;
+    buttonIconOff: string;
+    buttonTextOn: string;
+    buttonTextOff: string;
 }>>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onFirst-open"?: ((...args: any[]) => any) | undefined;
     "onClick-action-button"?: ((...args: any[]) => any) | undefined;
+    "onUser-toggle"?: ((...args: any[]) => any) | undefined;
 }, {
     minHeight: number | undefined;
     title: string;
@@ -122,6 +144,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     actionButtonData: LktObject;
     iconRotation: "90" | "180" | "-90" | "-180";
     toggleOnClickIntro: boolean;
+    buttonIconClass: string;
+    buttonIconOn: string;
+    buttonIconOff: string;
+    buttonTextOn: string;
+    buttonTextOff: string;
 }, {}>, {
     header?(_: {}): any;
     "read-more-content"?(_: {}): any;

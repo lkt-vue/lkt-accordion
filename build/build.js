@@ -1,25 +1,30 @@
-import { defineComponent, useSlots, ref, computed, watch, onMounted, nextTick, onBeforeUnmount, resolveComponent, openBlock, createElementBlock, normalizeClass, createElementVNode, createBlock, resolveDynamicComponent, createCommentVNode, unref, renderSlot, Fragment, createTextVNode, toDisplayString, createVNode, normalizeStyle } from "vue";
+import { defineComponent, useSlots, ref, computed, watch, onMounted, nextTick, onBeforeUnmount, resolveComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, createBlock, resolveDynamicComponent, createCommentVNode, unref, renderSlot, Fragment, createTextVNode, toDisplayString, createVNode, normalizeStyle } from "vue";
 import { __ } from "lkt-i18n";
 const _Settings = class _Settings {
 };
 _Settings.toggleSlot = "";
 _Settings.debugEnabled = false;
 let Settings = _Settings;
-const _hoisted_1 = {
+const _hoisted_1 = { class: "lkt-accordion-container" };
+const _hoisted_2 = {
   key: 0,
   class: "lkt-accordion-toggle"
 };
-const _hoisted_2 = {
+const _hoisted_3 = {
   key: 1,
   class: "lkt-accordion-title"
 };
-const _hoisted_3 = {
+const _hoisted_4 = {
   key: 2,
   class: "lkt-accordion-buttons"
 };
-const _hoisted_4 = {
+const _hoisted_5 = {
   key: 3,
   class: "lkt-accordion-toggle"
+};
+const _hoisted_6 = {
+  key: 0,
+  class: "lkt-accordion-nav"
 };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "LktAccordion",
@@ -45,9 +50,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     actionButtonData: { default: () => ({}) },
     iconRotation: { default: "90" },
     minHeight: { default: void 0 },
-    toggleOnClickIntro: { type: Boolean, default: false }
+    toggleOnClickIntro: { type: Boolean, default: false },
+    buttonIconClass: { default: "" },
+    buttonIconOn: { default: "" },
+    buttonIconOff: { default: "" },
+    buttonTextOn: { default: "" },
+    buttonTextOff: { default: "" }
   },
-  emits: ["update:modelValue", "first-open", "click-action-button"],
+  emits: ["update:modelValue", "first-open", "click-action-button", "user-toggle"],
   setup(__props, { emit: __emit }) {
     const emits = __emit;
     const slots = useSlots();
@@ -100,7 +110,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       return !!Settings.toggleSlot;
     }), toggleSlot = computed(() => {
       return Settings.toggleSlot;
-    });
+    }), computedButtonIcon = computed(() => isOpen.value ? props.buttonIconOn : props.buttonIconOff), computedButtonText = computed(() => isOpen.value ? props.buttonTextOn : props.buttonTextOff);
     const toggle = () => {
       if (props.alwaysOpen)
         return;
@@ -113,6 +123,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (props.toggleOnClickIntro) {
         toggle();
       }
+    }, onClickUserToggle = () => {
+      toggle();
+      emits("user-toggle", isOpen.value);
     };
     watch(() => props.modelValue, (v) => isOpen.value = v);
     watch(isOpen, (v) => {
@@ -175,76 +188,86 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     });
     return (_ctx, _cache) => {
       const _component_lkt_button = resolveComponent("lkt-button");
-      return openBlock(), createElementBlock("div", {
-        class: normalizeClass(["lkt-accordion", classes.value])
-      }, [
-        createElementVNode("header", {
-          class: "lkt-accordion-header",
-          onClick: toggle
+      return openBlock(), createElementBlock("div", _hoisted_1, [
+        createElementVNode("div", {
+          class: normalizeClass(["lkt-accordion", classes.value])
         }, [
-          !_ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_1, [
-            hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
-              key: 0,
-              class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])
-            }, null, 8, ["class"])) : (openBlock(), createElementBlock("div", {
-              key: 1,
-              class: normalizeClass(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", isOpen.value ? "is-opened" : ""])
-            }, null, 2))
-          ])) : createCommentVNode("", true),
-          !!unref(slots).header || computedLabel.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_2, [
-            !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : computedLabel.value.length > 0 ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-              _ctx.icon && !_ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
-                key: 0,
-                class: normalizeClass(_ctx.icon)
-              }, null, 2)) : createCommentVNode("", true),
-              createTextVNode(" " + toDisplayString(computedLabel.value) + " ", 1),
-              _ctx.icon && _ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
-                key: 1,
-                class: normalizeClass(_ctx.icon)
-              }, null, 2)) : createCommentVNode("", true)
-            ], 64)) : createCommentVNode("", true)
-          ])) : createCommentVNode("", true),
-          _ctx.showActionButton && (_ctx.actionButtonText !== "" || _ctx.actionButtonIcon !== "") ? (openBlock(), createElementBlock("div", _hoisted_3, [
-            createVNode(_component_lkt_button, {
-              class: normalizeClass(_ctx.actionButtonClass),
-              "confirm-data": _ctx.actionButtonConfirmData,
-              "confirm-modal": _ctx.actionButtonConfirm,
-              icon: _ctx.actionButtonIcon,
-              resource: _ctx.actionButtonResource,
-              text: _ctx.actionButtonText,
-              onClick: onClickActionButton
-            }, null, 8, ["class", "confirm-data", "confirm-modal", "icon", "resource", "text"])
-          ])) : createCommentVNode("", true),
-          _ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_4, [
-            hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
-              key: 0,
-              class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])
-            }, null, 8, ["class"])) : (openBlock(), createElementBlock("div", {
-              key: 1,
-              class: normalizeClass(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", isOpen.value ? "is-opened" : ""])
-            }, null, 2))
-          ])) : createCommentVNode("", true)
-        ]),
-        createElementVNode("section", {
-          class: normalizeClass(["lkt-accordion-content", contentClasses.value]),
-          style: normalizeStyle(contentInnerStyle.value)
-        }, [
-          createElementVNode("div", {
-            class: normalizeClass(["lkt-accordion-content-inner", contentInnerClasses.value]),
-            ref_key: "contentInner",
-            ref: contentInner
+          createElementVNode("header", {
+            class: "lkt-accordion-header",
+            onClick: onClickUserToggle
           }, [
-            unref(slots)["read-more-content"] ? (openBlock(), createElementBlock("section", {
-              key: 0,
-              class: "lkt-accordion-read-more-intro",
-              onClick: onClickReadMoreIntro
-            }, [
-              renderSlot(_ctx.$slots, "read-more-content")
+            !_ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_2, [
+              hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
+                key: 0,
+                class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])
+              }, null, 8, ["class"])) : (openBlock(), createElementBlock("div", {
+                key: 1,
+                class: normalizeClass(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", isOpen.value ? "is-opened" : ""])
+              }, null, 2))
             ])) : createCommentVNode("", true),
-            unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 1 }) : renderSlot(_ctx.$slots, "default", { key: 2 })
-          ], 2)
-        ], 6)
-      ], 2);
+            !!unref(slots).header || computedLabel.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3, [
+              !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : computedLabel.value.length > 0 ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+                _ctx.icon && !_ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
+                  key: 0,
+                  class: normalizeClass(_ctx.icon)
+                }, null, 2)) : createCommentVNode("", true),
+                createTextVNode(" " + toDisplayString(computedLabel.value) + " ", 1),
+                _ctx.icon && _ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
+                  key: 1,
+                  class: normalizeClass(_ctx.icon)
+                }, null, 2)) : createCommentVNode("", true)
+              ], 64)) : createCommentVNode("", true)
+            ])) : createCommentVNode("", true),
+            _ctx.showActionButton && (_ctx.actionButtonText !== "" || _ctx.actionButtonIcon !== "") ? (openBlock(), createElementBlock("div", _hoisted_4, [
+              createVNode(_component_lkt_button, {
+                class: normalizeClass(_ctx.actionButtonClass),
+                "confirm-data": _ctx.actionButtonConfirmData,
+                "confirm-modal": _ctx.actionButtonConfirm,
+                icon: _ctx.actionButtonIcon,
+                resource: _ctx.actionButtonResource,
+                text: _ctx.actionButtonText,
+                onClick: onClickActionButton
+              }, null, 8, ["class", "confirm-data", "confirm-modal", "icon", "resource", "text"])
+            ])) : createCommentVNode("", true),
+            _ctx.toggleIconAtEnd && !_ctx.alwaysOpen ? (openBlock(), createElementBlock("div", _hoisted_5, [
+              hasToggleSlot.value ? (openBlock(), createBlock(resolveDynamicComponent(toggleSlot.value), {
+                key: 0,
+                class: normalizeClass(["lkt-accordion-toggle-inner", isOpen.value ? "is-opened" : ""])
+              }, null, 8, ["class"])) : (openBlock(), createElementBlock("div", {
+                key: 1,
+                class: normalizeClass(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", isOpen.value ? "is-opened" : ""])
+              }, null, 2))
+            ])) : createCommentVNode("", true)
+          ]),
+          createElementVNode("section", {
+            class: normalizeClass(["lkt-accordion-content", contentClasses.value]),
+            style: normalizeStyle(contentInnerStyle.value)
+          }, [
+            createElementVNode("div", {
+              class: normalizeClass(["lkt-accordion-content-inner", contentInnerClasses.value]),
+              ref_key: "contentInner",
+              ref: contentInner
+            }, [
+              unref(slots)["read-more-content"] ? (openBlock(), createElementBlock("section", {
+                key: 0,
+                class: "lkt-accordion-read-more-intro",
+                onClick: onClickReadMoreIntro
+              }, [
+                renderSlot(_ctx.$slots, "read-more-content")
+              ])) : createCommentVNode("", true),
+              unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 1 }) : renderSlot(_ctx.$slots, "default", { key: 2 })
+            ], 2)
+          ], 6)
+        ], 2),
+        computedButtonText.value !== "" || computedButtonIcon.value !== "" ? (openBlock(), createElementBlock("nav", _hoisted_6, [
+          createVNode(_component_lkt_button, {
+            class: normalizeClass(_ctx.buttonIconClass),
+            icon: computedButtonIcon.value,
+            text: computedButtonText.value,
+            onClick: onClickUserToggle
+          }, null, 8, ["class", "icon", "text"])
+        ])) : createCommentVNode("", true)
+      ]);
     };
   }
 });

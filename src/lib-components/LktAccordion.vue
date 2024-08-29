@@ -5,7 +5,7 @@ import {Settings} from "../settings/Settings";
 import {__} from "lkt-i18n";
 
 // Emits
-const emits = defineEmits(['update:modelValue', 'first-open', 'click-action-button']);
+const emits = defineEmits(['update:modelValue', 'first-open', 'click-action-button', 'user-toggle']);
 
 // Slots
 const slots = useSlots();
@@ -34,6 +34,12 @@ const props = withDefaults(defineProps<{
     iconRotation: '90' | '180' | '-90' | '-180'
     minHeight: number | undefined
     toggleOnClickIntro: boolean
+
+    buttonIconClass: string
+    buttonIconOn: string
+    buttonIconOff: string
+    buttonTextOn: string
+    buttonTextOff: string
 }>(), {
     modelValue: false,
     title: '',
@@ -57,6 +63,11 @@ const props = withDefaults(defineProps<{
     iconRotation: '90',
     minHeight: undefined,
     toggleOnClickIntro: false,
+    buttonIconClass: '',
+    buttonIconOn: '',
+    buttonIconOff: '',
+    buttonTextOn: '',
+    buttonTextOff: '',
 });
 
 const isOpen = ref(props.modelValue),
@@ -118,7 +129,9 @@ const classes = computed(() => {
     }),
     toggleSlot = computed(() => {
         return Settings.toggleSlot;
-    });
+    }),
+    computedButtonIcon = computed(() => isOpen.value ? props.buttonIconOn : props.buttonIconOff),
+    computedButtonText = computed(() => isOpen.value ? props.buttonTextOn : props.buttonTextOff);
 
 const toggle = () => {
         if (props.alwaysOpen) return;
@@ -132,6 +145,10 @@ const toggle = () => {
         if (props.toggleOnClickIntro) {
             toggle();
         }
+    },
+    onClickUserToggle = () => {
+        toggle();
+        emits('user-toggle', isOpen.value);
     };
 
 watch(() => props.modelValue, (v) => isOpen.value = v);
@@ -211,60 +228,75 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="lkt-accordion" :class="classes">
-        <header class="lkt-accordion-header" @click="toggle">
-            <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && !alwaysOpen">
-                <template v-if="hasToggleSlot">
-                    <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
-                </template>
-                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
-                     :class="isOpen ? 'is-opened' : '' "/>
-            </div>
+    <div class="lkt-accordion-container">
+        <div class="lkt-accordion" :class="classes">
+            <header class="lkt-accordion-header" @click="onClickUserToggle">
+                <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && !alwaysOpen">
+                    <template v-if="hasToggleSlot">
+                        <component :is="toggleSlot" class="lkt-accordion-toggle-inner"
+                                   :class="isOpen ? 'is-opened' : '' "/>
+                    </template>
+                    <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
+                         :class="isOpen ? 'is-opened' : '' "/>
+                </div>
 
-            <div class="lkt-accordion-title" v-if="!!slots.header || computedLabel.length > 0">
-                <template v-if="!!slots.header">
-                    <slot name="header"/>
-                </template>
-                <template v-else-if="computedLabel.length > 0">
-                    <i v-if="icon && !iconAtEnd" :class="icon"/>
-                    {{ computedLabel }}
-                    <i v-if="icon && iconAtEnd" :class="icon"/>
-                </template>
-            </div>
+                <div class="lkt-accordion-title" v-if="!!slots.header || computedLabel.length > 0">
+                    <template v-if="!!slots.header">
+                        <slot name="header"/>
+                    </template>
+                    <template v-else-if="computedLabel.length > 0">
+                        <i v-if="icon && !iconAtEnd" :class="icon"/>
+                        {{ computedLabel }}
+                        <i v-if="icon && iconAtEnd" :class="icon"/>
+                    </template>
+                </div>
 
-            <div class="lkt-accordion-buttons"
-                 v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
-                <lkt-button
-                    :class="actionButtonClass"
-                    :confirm-data="actionButtonConfirmData"
-                    :confirm-modal="actionButtonConfirm"
-                    :icon="actionButtonIcon"
-                    :resource="actionButtonResource"
-                    :text="actionButtonText"
-                    @click="onClickActionButton"
-                />
-            </div>
+                <div class="lkt-accordion-buttons"
+                     v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
+                    <lkt-button
+                        :class="actionButtonClass"
+                        :confirm-data="actionButtonConfirmData"
+                        :confirm-modal="actionButtonConfirm"
+                        :icon="actionButtonIcon"
+                        :resource="actionButtonResource"
+                        :text="actionButtonText"
+                        @click="onClickActionButton"
+                    />
+                </div>
 
-            <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd && !alwaysOpen">
-                <template v-if="hasToggleSlot">
-                    <component :is="toggleSlot" class="lkt-accordion-toggle-inner" :class="isOpen ? 'is-opened' : '' "/>
-                </template>
-                <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
-                     :class="isOpen ? 'is-opened' : '' "/>
-            </div>
-        </header>
-        <section class="lkt-accordion-content" :style="contentInnerStyle" :class="contentClasses">
-            <div class="lkt-accordion-content-inner" ref="contentInner" :class="contentInnerClasses">
-                <template v-if="slots['read-more-content']">
-                    <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
-                        <slot name="read-more-content"/>
-                    </section>
-                </template>
-                <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
-                    <slot name="content-after-first-open"/>
-                </template>
-                <slot v-else/>
-            </div>
-        </section>
+                <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd && !alwaysOpen">
+                    <template v-if="hasToggleSlot">
+                        <component :is="toggleSlot" class="lkt-accordion-toggle-inner"
+                                   :class="isOpen ? 'is-opened' : '' "/>
+                    </template>
+                    <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
+                         :class="isOpen ? 'is-opened' : '' "/>
+                </div>
+            </header>
+            <section class="lkt-accordion-content" :style="contentInnerStyle" :class="contentClasses">
+                <div class="lkt-accordion-content-inner" ref="contentInner" :class="contentInnerClasses">
+                    <template v-if="slots['read-more-content']">
+                        <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
+                            <slot name="read-more-content"/>
+                        </section>
+                    </template>
+                    <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
+                        <slot name="content-after-first-open"/>
+                    </template>
+                    <slot v-else/>
+                </div>
+            </section>
+        </div>
+        <nav
+            class="lkt-accordion-nav"
+            v-if="computedButtonText !== '' || computedButtonIcon !== ''"
+        >
+            <lkt-button
+                :class="buttonIconClass"
+                :icon="computedButtonIcon"
+                :text="computedButtonText"
+                @click="onClickUserToggle"
+            />
+        </nav>
     </div>
 </template>
