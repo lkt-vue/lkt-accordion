@@ -92,7 +92,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       let r = [];
       if (props.contentClass)
         r.push(props.contentClass);
-      if (renderContent.value)
+      if (isOpen.value && renderContent.value)
         r.push("is-opened");
       return r.join(" ");
     }), contentInnerStyle = computed(() => {

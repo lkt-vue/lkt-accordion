@@ -107,7 +107,7 @@ const classes = computed(() => {
         let r = [];
 
         if (props.contentClass) r.push(props.contentClass);
-        if (renderContent.value) r.push('is-opened');
+        if (isOpen.value && renderContent.value) r.push('is-opened');
 
         return r.join(' ');
     }),
