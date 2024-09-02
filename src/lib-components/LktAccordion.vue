@@ -225,6 +225,14 @@ onBeforeUnmount(() => {
     contentInnerObserver.value.disconnect();
     window.removeEventListener('resize', calcContentStyle);
 })
+
+if (slots['read-more-content']) {
+    console.info('[LktAccordion] Using read-more-content slot');
+}
+
+if (slots['content-after-first-open']) {
+    console.info('[LktAccordion] Using content-after-first-open slot');
+}
 </script>
 
 <template>
@@ -275,12 +283,21 @@ onBeforeUnmount(() => {
             </header>
             <section class="lkt-accordion-content" :style="contentInnerStyle" :class="contentClasses">
                 <div class="lkt-accordion-content-inner" ref="contentInner" :class="contentInnerClasses">
-                    <template v-if="slots['read-more-content']">
+                    <template v-if="slots['intro']">
+                        <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
+                            <slot name="intro"/>
+                        </section>
+                    </template>
+                    <template v-else-if="slots['read-more-content']">
                         <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
                             <slot name="read-more-content"/>
                         </section>
                     </template>
-                    <template v-if="slots['content-after-first-open'] && atLeastToggledOnce">
+
+                    <template v-if="slots['lazy'] && atLeastToggledOnce">
+                        <slot name="lazy"/>
+                    </template>
+                    <template v-else-if="slots['content-after-first-open'] && atLeastToggledOnce">
                         <slot name="content-after-first-open"/>
                     </template>
                     <slot v-else/>

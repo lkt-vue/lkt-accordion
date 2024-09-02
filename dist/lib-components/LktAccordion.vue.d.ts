@@ -151,7 +151,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     buttonTextOff: string;
 }, {}>, {
     header?(_: {}): any;
+    intro?(_: {}): any;
     "read-more-content"?(_: {}): any;
+    lazy?(_: {}): any;
     "content-after-first-open"?(_: {}): any;
     default?(_: {}): any;
 }>;

@@ -186,6 +186,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       contentInnerObserver.value.disconnect();
       window.removeEventListener("resize", calcContentStyle);
     });
+    if (slots["read-more-content"]) {
+      console.info("[LktAccordion] Using read-more-content slot");
+    }
+    if (slots["content-after-first-open"]) {
+      console.info("[LktAccordion] Using content-after-first-open slot");
+    }
     return (_ctx, _cache) => {
       const _component_lkt_button = resolveComponent("lkt-button");
       return openBlock(), createElementBlock("div", _hoisted_1, [
@@ -248,14 +254,20 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               ref_key: "contentInner",
               ref: contentInner
             }, [
-              unref(slots)["read-more-content"] ? (openBlock(), createElementBlock("section", {
+              unref(slots)["intro"] ? (openBlock(), createElementBlock("section", {
                 key: 0,
+                class: "lkt-accordion-read-more-intro",
+                onClick: onClickReadMoreIntro
+              }, [
+                renderSlot(_ctx.$slots, "intro")
+              ])) : unref(slots)["read-more-content"] ? (openBlock(), createElementBlock("section", {
+                key: 1,
                 class: "lkt-accordion-read-more-intro",
                 onClick: onClickReadMoreIntro
               }, [
                 renderSlot(_ctx.$slots, "read-more-content")
               ])) : createCommentVNode("", true),
-              unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 1 }) : renderSlot(_ctx.$slots, "default", { key: 2 })
+              unref(slots)["lazy"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "lazy", { key: 2 }) : unref(slots)["content-after-first-open"] && atLeastToggledOnce.value ? renderSlot(_ctx.$slots, "content-after-first-open", { key: 3 }) : renderSlot(_ctx.$slots, "default", { key: 4 })
             ], 2)
           ], 6)
         ], 2),

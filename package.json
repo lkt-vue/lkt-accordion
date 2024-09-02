@@ -1,6 +1,6 @@
 {
   "name": "lkt-accordion",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "",
   "type": "module",
   "module": "./dist/build.js",
@@ -21,7 +21,8 @@
   "license": "MIT",
   "sideEffects": false,
   "scripts": {
-    "build": "rm -rf dist/*; vue-tsc --declaration --emitDeclarationOnly; tsc --project tsconfig.build.json; vite build; cp build/* dist/"
+    "build": "vue-tsc --declaration --emitDeclarationOnly; tsc --project tsconfig.build.json; vite build; cp build/* dist/",
+    "rebuild": "rm -rf dist/*; vue-tsc --declaration --emitDeclarationOnly; tsc --project tsconfig.build.json; vite build; cp build/* dist/"
   },
   "author": "Antonio Ibáñez",
   "devDependencies": {
