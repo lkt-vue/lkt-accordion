@@ -66,39 +66,28 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     if (props.alwaysOpen && !isOpen.value) {
       isOpen.value = true;
     }
-    if (isOpen.value)
-      atLeastToggledOnce.value = true;
+    if (isOpen.value) atLeastToggledOnce.value = true;
     const classes = computed(() => {
       let r = [];
-      if (props.palette)
-        r.push(`lkt-accordion--${props.palette}`);
-      if (props.class)
-        r.push(props.class);
-      if (isOpen.value)
-        r.push("is-open");
-      if (props.toggleIconAtEnd)
-        r.push("icon-at-end");
-      if (props.toggleMode)
-        r.push(`toggle-mode--${props.toggleMode}`);
-      if (props.iconRotation)
-        r.push(`icon-rotation--${props.iconRotation}`);
+      if (props.palette) r.push(`lkt-accordion--${props.palette}`);
+      if (props.class) r.push(props.class);
+      if (isOpen.value) r.push("is-open");
+      if (props.toggleIconAtEnd) r.push("icon-at-end");
+      if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
+      if (props.iconRotation) r.push(`icon-rotation--${props.iconRotation}`);
       return r.join(" ");
     }), contentClasses = computed(() => {
       let r = [];
-      if (blurLayerRequired.value && !isOpen.value)
-        r.push("lkt-accordion-blur-layer");
+      if (blurLayerRequired.value && !isOpen.value) r.push("lkt-accordion-blur-layer");
       return r.join(" ");
     }), contentInnerClasses = computed(() => {
       let r = [];
-      if (props.contentClass)
-        r.push(props.contentClass);
-      if (isOpen.value && renderContent.value)
-        r.push("is-opened");
+      if (props.contentClass) r.push(props.contentClass);
+      if (isOpen.value && renderContent.value) r.push("is-opened");
       return r.join(" ");
     }), contentInnerStyle = computed(() => {
       if (!isOpen.value) {
-        if (typeof props.minHeight === "undefined")
-          return "";
+        if (typeof props.minHeight === "undefined") return "";
       }
       return contentInnerStyles.value;
     }), computedLabel = computed(() => {
@@ -112,8 +101,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       return Settings.toggleSlot;
     }), computedButtonIcon = computed(() => isOpen.value ? props.buttonIconOn : props.buttonIconOff), computedButtonText = computed(() => isOpen.value ? props.buttonTextOn : props.buttonTextOff);
     const toggle = () => {
-      if (props.alwaysOpen)
-        return;
+      if (props.alwaysOpen) return;
       if (!isOpen.value && !atLeastToggledOnce.value) {
         atLeastToggledOnce.value = true;
       }
@@ -151,6 +139,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         return;
       }
       blurLayerRequired.value = false;
+      if (!contentInner.value) return;
       let contentHeight = contentInner.value.offsetHeight, minHeight = Number(props.minHeight);
       let height = contentHeight;
       if (!isOpen.value && minHeight < contentHeight) {
@@ -183,7 +172,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       window.addEventListener("resize", calcContentStyle);
     });
     onBeforeUnmount(() => {
-      contentInnerObserver.value.disconnect();
+      if (typeof contentInnerObserver.value !== "undefined") {
+        contentInnerObserver.value.disconnect();
+      }
       window.removeEventListener("resize", calcContentStyle);
     });
     if (slots["read-more-content"]) {
@@ -285,8 +276,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
 });
 const LktAccordion = {
   install: (app) => {
-    if (app.component("lkt-accordion") === void 0)
-      app.component("lkt-accordion", _sfc_main);
+    if (app.component("lkt-accordion") === void 0) app.component("lkt-accordion", _sfc_main);
   }
 };
 const setAccordionToggleSlot = (component) => {

@@ -181,6 +181,8 @@ const calcContentStyle = () => {
 
     blurLayerRequired.value = false;
 
+    if (!contentInner.value) return;
+
     let contentHeight = contentInner.value.offsetHeight,
         minHeight = Number(props.minHeight);
     let height = contentHeight;
@@ -222,7 +224,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-    contentInnerObserver.value.disconnect();
+    if (typeof contentInnerObserver.value !== 'undefined') {
+        contentInnerObserver.value.disconnect();
+    }
     window.removeEventListener('resize', calcContentStyle);
 })
 
