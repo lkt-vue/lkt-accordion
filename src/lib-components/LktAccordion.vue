@@ -224,7 +224,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-    if (typeof contentInnerObserver.value !== 'undefined') {
+    if (typeof contentInnerObserver.value !== 'undefined' && contentInnerObserver.value !== null) {
         contentInnerObserver.value.disconnect();
     }
     window.removeEventListener('resize', calcContentStyle);

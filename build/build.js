@@ -172,7 +172,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       window.addEventListener("resize", calcContentStyle);
     });
     onBeforeUnmount(() => {
-      if (typeof contentInnerObserver.value !== "undefined") {
+      if (typeof contentInnerObserver.value !== "undefined" && contentInnerObserver.value !== null) {
         contentInnerObserver.value.disconnect();
       }
       window.removeEventListener("resize", calcContentStyle);
