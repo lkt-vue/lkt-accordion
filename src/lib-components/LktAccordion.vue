@@ -1,46 +1,22 @@
 <script setup lang="ts">
 import {computed, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch} from "vue";
-import {LktObject} from "lkt-ts-interfaces";
 import {Settings} from "../settings/Settings";
 import {__} from "lkt-i18n";
+import {AccordionConfig, AccordionType} from "lkt-vue-kernel";
 
 // Emits
-const emits = defineEmits(['update:modelValue', 'first-open', 'click-action-button', 'user-toggle']);
+const emits = defineEmits([
+    'update:modelValue',
+    'first-open',
+    'click-action-button',
+    'user-toggle'
+]);
 
 // Slots
 const slots = useSlots();
 
 // Props
-const props = withDefaults(defineProps<{
-    modelValue: boolean
-    title: string
-    icon: string
-    palette: string
-    class: string
-    contentClass: string
-    toggleMode: 'transform' | 'height' | 'display'
-    toggleTimeout: number
-    toggleIconAtEnd: boolean
-    iconAtEnd: boolean
-    alwaysOpen: boolean
-    showActionButton: boolean
-    actionButtonClass: string
-    actionButtonText: string
-    actionButtonIcon: string
-    actionButtonResource: string
-    actionButtonConfirm: string
-    actionButtonConfirmData: LktObject
-    actionButtonData: LktObject
-    iconRotation: '90' | '180' | '-90' | '-180'
-    minHeight: number | undefined
-    toggleOnClickIntro: boolean
-
-    buttonIconClass: string
-    buttonIconOn: string
-    buttonIconOff: string
-    buttonTextOn: string
-    buttonTextOff: string
-}>(), {
+const props = withDefaults(defineProps<AccordionConfig>(), {
     modelValue: false,
     title: '',
     icon: '',
@@ -79,7 +55,7 @@ const isOpen = ref(props.modelValue),
     contentInnerStyles = ref(''),
     blurLayerRequired = ref(false);
 
-if (props.alwaysOpen && !isOpen.value) {
+if (props.type === AccordionType.Always && !isOpen.value) {
     isOpen.value = true;
 }
 
@@ -88,7 +64,6 @@ if (isOpen.value) atLeastToggledOnce.value = true;
 const classes = computed(() => {
         let r = [];
 
-        if (props.palette) r.push(`lkt-accordion--${props.palette}`);
         if (props.class) r.push(props.class);
         if (isOpen.value) r.push('is-open');
         if (props.toggleIconAtEnd) r.push('icon-at-end');
@@ -130,11 +105,20 @@ const classes = computed(() => {
     toggleSlot = computed(() => {
         return Settings.toggleSlot;
     }),
-    computedButtonIcon = computed(() => isOpen.value ? props.buttonIconOn : props.buttonIconOff),
-    computedButtonText = computed(() => isOpen.value ? props.buttonTextOn : props.buttonTextOff);
+    computedShowActionButton = computed(() => {
+        return typeof props.actionButton !== 'undefined' && Object.keys(props.actionButton).length > 0;
+    }),
+    computedShowToggleButton = computed(() => {
+        return typeof props.toggleButton !== 'undefined' && Object.keys(props.toggleButton).length > 0;
+    }),
+    computedCanRenderDefaultSlot = computed(() => {
+        if (props.type === AccordionType.Lazy) return atLeastToggledOnce.value;
+        if (props.type === AccordionType.Ever) return isOpen.value;
+        return true;
+    });
 
 const toggle = () => {
-        if (props.alwaysOpen) return;
+        if (props.type === AccordionType.Always) return;
         if (!isOpen.value && !atLeastToggledOnce.value) {
             atLeastToggledOnce.value = true;
         }
@@ -171,7 +155,7 @@ watch(isOpen, (v) => {
 watch(atLeastToggledOnce, () => emits('first-open'));
 
 const onClickActionButton = () => {
-    emits('click-action-button', props.actionButtonData);
+    emits('click-action-button', props.actionButton?.resourceData);
 }
 
 const calcContentStyle = () => {
@@ -229,21 +213,13 @@ onBeforeUnmount(() => {
     }
     window.removeEventListener('resize', calcContentStyle);
 })
-
-if (slots['read-more-content']) {
-    console.info('[LktAccordion] Using read-more-content slot');
-}
-
-if (slots['content-after-first-open']) {
-    console.info('[LktAccordion] Using content-after-first-open slot');
-}
 </script>
 
 <template>
     <div class="lkt-accordion-container">
         <div class="lkt-accordion" :class="classes">
             <header class="lkt-accordion-header" @click="onClickUserToggle">
-                <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && !alwaysOpen">
+                <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && props.type !== AccordionType.Always">
                     <template v-if="hasToggleSlot">
                         <component :is="toggleSlot" class="lkt-accordion-toggle-inner"
                                    :class="isOpen ? 'is-opened' : '' "/>
@@ -264,19 +240,14 @@ if (slots['content-after-first-open']) {
                 </div>
 
                 <div class="lkt-accordion-buttons"
-                     v-if="showActionButton && (actionButtonText !== '' || actionButtonIcon !== '')">
+                     v-if="computedShowActionButton">
                     <lkt-button
-                        :class="actionButtonClass"
-                        :confirm-data="actionButtonConfirmData"
-                        :confirm-modal="actionButtonConfirm"
-                        :icon="actionButtonIcon"
-                        :resource="actionButtonResource"
-                        :text="actionButtonText"
+                        v-bind="actionButton"
                         @click="onClickActionButton"
                     />
                 </div>
 
-                <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd && !alwaysOpen">
+                <div class="lkt-accordion-toggle" v-if="toggleIconAtEnd && props.type !== AccordionType.Always">
                     <template v-if="hasToggleSlot">
                         <component :is="toggleSlot" class="lkt-accordion-toggle-inner"
                                    :class="isOpen ? 'is-opened' : '' "/>
@@ -292,30 +263,20 @@ if (slots['content-after-first-open']) {
                             <slot name="intro"/>
                         </section>
                     </template>
-                    <template v-else-if="slots['read-more-content']">
-                        <section class="lkt-accordion-read-more-intro" @click="onClickReadMoreIntro">
-                            <slot name="read-more-content"/>
-                        </section>
-                    </template>
 
                     <template v-if="slots['lazy'] && atLeastToggledOnce">
                         <slot name="lazy"/>
                     </template>
-                    <template v-else-if="slots['content-after-first-open'] && atLeastToggledOnce">
-                        <slot name="content-after-first-open"/>
-                    </template>
-                    <slot v-else/>
+                    <slot v-else-if="computedCanRenderDefaultSlot"/>
                 </div>
             </section>
         </div>
         <nav
             class="lkt-accordion-nav"
-            v-if="computedButtonText !== '' || computedButtonIcon !== ''"
+            v-if="computedShowToggleButton"
         >
             <lkt-button
-                :class="buttonIconClass"
-                :icon="computedButtonIcon"
-                :text="computedButtonText"
+                v-bind="toggleButton"
                 @click="onClickUserToggle"
             />
         </nav>
