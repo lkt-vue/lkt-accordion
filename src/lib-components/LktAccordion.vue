@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import {computed, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch} from "vue";
 import {Settings} from "../settings/Settings";
-import {__} from "lkt-i18n";
-import {AccordionConfig, AccordionType} from "lkt-vue-kernel";
+import {
+    Accordion,
+    AccordionConfig,
+    AccordionType,
+    ensureButtonConfig,
+    extractI18nValue,
+    getDefaultValues,
+    LktSettings
+} from "lkt-vue-kernel";
 
 // Emits
 const emits = defineEmits([
@@ -16,35 +23,7 @@ const emits = defineEmits([
 const slots = useSlots();
 
 // Props
-const props = withDefaults(defineProps<AccordionConfig>(), {
-    modelValue: false,
-    title: '',
-    icon: '',
-    palette: '',
-    class: '',
-    contentClass: '',
-    toggleMode: 'height',
-    toggleTimeout: 0,
-    toggleIconAtEnd: false,
-    iconAtEnd: false,
-    alwaysOpen: false,
-    showActionButton: false,
-    actionButtonClass: '',
-    actionButtonText: '',
-    actionButtonIcon: '',
-    actionButtonResource: '',
-    actionButtonConfirm: '',
-    actionButtonConfirmData: () => ({}),
-    actionButtonData: () => ({}),
-    iconRotation: '90',
-    minHeight: undefined,
-    toggleOnClickIntro: false,
-    buttonIconClass: '',
-    buttonIconOn: '',
-    buttonIconOff: '',
-    buttonTextOn: '',
-    buttonTextOff: '',
-});
+const props = withDefaults(defineProps<AccordionConfig>(), getDefaultValues(Accordion));
 
 const isOpen = ref(props.modelValue),
     renderContent = ref(props.modelValue),
@@ -55,18 +34,18 @@ const isOpen = ref(props.modelValue),
     contentInnerStyles = ref(''),
     blurLayerRequired = ref(false);
 
-if (props.type === AccordionType.Always && !isOpen.value) {
-    isOpen.value = true;
-}
+const safeToggleButton = ref(ensureButtonConfig(props.toggleButton, LktSettings.defaultToggleButton));
 
-if (isOpen.value) atLeastToggledOnce.value = true;
+watch(() => props.toggleButton, v => {
+    safeToggleButton.value = ensureButtonConfig(v, LktSettings.defaultToggleButton);
+}, { deep: true });
 
 const classes = computed(() => {
         let r = [];
 
         if (props.class) r.push(props.class);
         if (isOpen.value) r.push('is-open');
-        if (props.toggleIconAtEnd) r.push('icon-at-end');
+        if (props.toggleButton?.iconEnd) r.push('icon-at-end');
         if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
         if (props.iconRotation) r.push(`icon-rotation--${props.iconRotation}`);
 
@@ -93,11 +72,8 @@ const classes = computed(() => {
         }
         return contentInnerStyles.value;
     }),
-    computedLabel = computed(() => {
-        if (props.title.startsWith('__:')) {
-            return __(props.title.substring(3));
-        }
-        return props.title;
+    computedTitle = computed(() => {
+        return extractI18nValue(props.title);
     }),
     hasToggleSlot = computed(() => {
         return !!Settings.toggleSlot;
@@ -117,12 +93,14 @@ const classes = computed(() => {
         return true;
     });
 
-const toggle = () => {
+const toggle = (skipIsOpenControl: boolean = false) => {
         if (props.type === AccordionType.Always) return;
         if (!isOpen.value && !atLeastToggledOnce.value) {
             atLeastToggledOnce.value = true;
         }
-        isOpen.value = !isOpen.value
+        if (!skipIsOpenControl) {
+            isOpen.value = !isOpen.value
+        }
         calcContentStyle();
     },
     onClickReadMoreIntro = () => {
@@ -132,6 +110,11 @@ const toggle = () => {
     },
     onClickUserToggle = () => {
         toggle();
+        emits('user-toggle', isOpen.value);
+    },
+    onClickToggleButton = ($event?: PointerEvent|undefined) => {
+        if (!$event) return;
+        toggle(true);
         emits('user-toggle', isOpen.value);
     };
 
@@ -183,6 +166,12 @@ const calcContentStyle = () => {
 }
 
 onMounted(() => {
+    if (props.type === AccordionType.Always && !isOpen.value) {
+        isOpen.value = true;
+    }
+
+    if (isOpen.value) atLeastToggledOnce.value = true;
+
     nextTick(() => {
         //@ts-ignore
         contentInnerHeight.value = contentInner.value.clientHeight;
@@ -228,13 +217,13 @@ onBeforeUnmount(() => {
                          :class="isOpen ? 'is-opened' : '' "/>
                 </div>
 
-                <div class="lkt-accordion-title" v-if="!!slots.header || computedLabel.length > 0">
+                <div class="lkt-accordion-title" v-if="!!slots.header || computedTitle.length > 0">
                     <template v-if="!!slots.header">
                         <slot name="header"/>
                     </template>
-                    <template v-else-if="computedLabel.length > 0">
+                    <template v-else-if="computedTitle.length > 0">
                         <i v-if="icon && !iconAtEnd" :class="icon"/>
-                        {{ computedLabel }}
+                        {{ computedTitle }}
                         <i v-if="icon && iconAtEnd" :class="icon"/>
                     </template>
                 </div>
@@ -276,8 +265,9 @@ onBeforeUnmount(() => {
             v-if="computedShowToggleButton"
         >
             <lkt-button
-                v-bind="toggleButton"
-                @click="onClickUserToggle"
+                v-bind="safeToggleButton"
+                v-model:checked="isOpen"
+                @click="onClickToggleButton"
             />
         </nav>
     </div>

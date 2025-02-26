@@ -1,18 +1,10 @@
-import { defineComponent, useSlots, ref, computed, watch, onMounted, nextTick, onBeforeUnmount, resolveComponent, createElementBlock, openBlock, createElementVNode, createCommentVNode, normalizeClass, unref, createBlock, resolveDynamicComponent, renderSlot, Fragment, createTextVNode, toDisplayString, createVNode, mergeProps, normalizeStyle } from "vue";
-import { __ } from "lkt-i18n";
-import "lkt-string-tools";
+import { defineComponent, mergeDefaults, useSlots, ref, watch, computed, onMounted, nextTick, onBeforeUnmount, resolveComponent, createElementBlock, openBlock, createElementVNode, createCommentVNode, normalizeClass, unref, createBlock, resolveDynamicComponent, renderSlot, Fragment, createTextVNode, toDisplayString, createVNode, mergeProps, normalizeStyle } from "vue";
+import { ensureButtonConfig, LktSettings, extractI18nValue, AccordionType, getDefaultValues, Accordion } from "lkt-vue-kernel";
 const _Settings = class _Settings {
 };
 _Settings.toggleSlot = "";
 _Settings.debugEnabled = false;
 let Settings = _Settings;
-var AccordionType = /* @__PURE__ */ ((AccordionType2) => {
-  AccordionType2["Auto"] = "auto";
-  AccordionType2["Always"] = "always";
-  AccordionType2["Lazy"] = "lazy";
-  AccordionType2["Ever"] = "ever";
-  return AccordionType2;
-})(AccordionType || {});
 const _hoisted_1 = { class: "lkt-accordion-container" };
 const _hoisted_2 = {
   key: 0,
@@ -36,23 +28,23 @@ const _hoisted_6 = {
 };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "LktAccordion",
-  props: {
-    modelValue: { type: Boolean, default: false },
+  props: /* @__PURE__ */ mergeDefaults({
+    modelValue: { type: Boolean },
     type: {},
-    toggleMode: { default: "height" },
+    toggleMode: {},
     actionButton: {},
     toggleButton: {},
-    toggleOnClickIntro: { type: Boolean, default: false },
-    toggleTimeout: { default: 0 },
-    title: { default: "" },
-    icon: { default: "" },
-    class: { default: "" },
-    contentClass: { default: "" },
-    iconRotation: { default: "90" },
-    minHeight: { default: void 0 },
-    toggleIconAtEnd: { type: Boolean, default: false },
-    iconAtEnd: { type: Boolean, default: false }
-  },
+    toggleOnClickIntro: { type: Boolean },
+    toggleTimeout: {},
+    title: {},
+    icon: {},
+    class: {},
+    contentClass: {},
+    iconRotation: {},
+    minHeight: {},
+    iconAtEnd: { type: Boolean },
+    toggleIconAtEnd: { type: Boolean }
+  }, getDefaultValues(Accordion)),
   emits: [
     "update:modelValue",
     "first-open",
@@ -64,15 +56,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const slots = useSlots();
     const props = __props;
     const isOpen = ref(props.modelValue), renderContent = ref(props.modelValue), contentInner = ref(null), contentInnerObserver = ref(null), contentInnerHeight = ref(0), atLeastToggledOnce = ref(false), contentInnerStyles = ref(""), blurLayerRequired = ref(false);
-    if (props.type === AccordionType.Always && !isOpen.value) {
-      isOpen.value = true;
-    }
-    if (isOpen.value) atLeastToggledOnce.value = true;
+    const safeToggleButton = ref(ensureButtonConfig(props.toggleButton, LktSettings.defaultToggleButton));
+    watch(() => props.toggleButton, (v) => {
+      safeToggleButton.value = ensureButtonConfig(v, LktSettings.defaultToggleButton);
+    }, { deep: true });
     const classes = computed(() => {
+      var _a;
       let r = [];
       if (props.class) r.push(props.class);
       if (isOpen.value) r.push("is-open");
-      if (props.toggleIconAtEnd) r.push("icon-at-end");
+      if ((_a = props.toggleButton) == null ? void 0 : _a.iconEnd) r.push("icon-at-end");
       if (props.toggleMode) r.push(`toggle-mode--${props.toggleMode}`);
       if (props.iconRotation) r.push(`icon-rotation--${props.iconRotation}`);
       return r.join(" ");
@@ -90,11 +83,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         if (typeof props.minHeight === "undefined") return "";
       }
       return contentInnerStyles.value;
-    }), computedLabel = computed(() => {
-      if (props.title.startsWith("__:")) {
-        return __(props.title.substring(3));
-      }
-      return props.title;
+    }), computedTitle = computed(() => {
+      return extractI18nValue(props.title);
     }), hasToggleSlot = computed(() => {
       return !!Settings.toggleSlot;
     }), toggleSlot = computed(() => {
@@ -108,12 +98,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (props.type === AccordionType.Ever) return isOpen.value;
       return true;
     });
-    const toggle = () => {
+    const toggle = (skipIsOpenControl = false) => {
       if (props.type === AccordionType.Always) return;
       if (!isOpen.value && !atLeastToggledOnce.value) {
         atLeastToggledOnce.value = true;
       }
-      isOpen.value = !isOpen.value;
+      if (!skipIsOpenControl) {
+        isOpen.value = !isOpen.value;
+      }
       calcContentStyle();
     }, onClickReadMoreIntro = () => {
       if (props.toggleOnClickIntro) {
@@ -121,6 +113,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
     }, onClickUserToggle = () => {
       toggle();
+      emits("user-toggle", isOpen.value);
+    }, onClickToggleButton = ($event) => {
+      if (!$event) return;
+      toggle(true);
       emits("user-toggle", isOpen.value);
     };
     watch(() => props.modelValue, (v) => isOpen.value = v);
@@ -161,6 +157,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       ].join(";");
     };
     onMounted(() => {
+      if (props.type === AccordionType.Always && !isOpen.value) {
+        isOpen.value = true;
+      }
+      if (isOpen.value) atLeastToggledOnce.value = true;
       nextTick(() => {
         contentInnerHeight.value = contentInner.value.clientHeight;
         const observer = new MutationObserver(() => {
@@ -205,13 +205,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 class: normalizeClass(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", isOpen.value ? "is-opened" : ""])
               }, null, 2))
             ])) : createCommentVNode("", true),
-            !!unref(slots).header || computedLabel.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3, [
-              !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : computedLabel.value.length > 0 ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+            !!unref(slots).header || computedTitle.value.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3, [
+              !!unref(slots).header ? renderSlot(_ctx.$slots, "header", { key: 0 }) : computedTitle.value.length > 0 ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
                 _ctx.icon && !_ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
                   key: 0,
                   class: normalizeClass(_ctx.icon)
                 }, null, 2)) : createCommentVNode("", true),
-                createTextVNode(" " + toDisplayString(computedLabel.value) + " ", 1),
+                createTextVNode(" " + toDisplayString(computedTitle.value) + " ", 1),
                 _ctx.icon && _ctx.iconAtEnd ? (openBlock(), createElementBlock("i", {
                   key: 1,
                   class: normalizeClass(_ctx.icon)
@@ -252,7 +252,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           ], 6)
         ], 2),
         computedShowToggleButton.value ? (openBlock(), createElementBlock("nav", _hoisted_6, [
-          createVNode(_component_lkt_button, mergeProps(_ctx.toggleButton, { onClick: onClickUserToggle }), null, 16)
+          createVNode(_component_lkt_button, mergeProps(safeToggleButton.value, {
+            checked: isOpen.value,
+            "onUpdate:checked": _cache[0] || (_cache[0] = ($event) => isOpen.value = $event),
+            onClick: onClickToggleButton
+          }), null, 16, ["checked"])
         ])) : createCommentVNode("", true)
       ]);
     };

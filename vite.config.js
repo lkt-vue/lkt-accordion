@@ -28,12 +28,12 @@ export default {
             external: [
                 'vue',
                 'vue-router',
-                'lkt-fields',
+                'lkt-field',
                 'lkt-button',
                 'lkt-string-tools',
                 'lkt-http',
                 'lkt-http-client',
-                'lkt-ts-interfaces',
+                'lkt-vue-kernel',
                 'lkt-i18n',
                 'lkt-session'
             ],

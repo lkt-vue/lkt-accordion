@@ -25,6 +25,9 @@
     "rebuild": "rm -rf dist/*; vue-tsc --declaration --emitDeclarationOnly; tsc --project tsconfig.build.json; vite build; cp build/* dist/"
   },
   "author": "Antonio Ibáñez",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@babel/types": "^7.23.6",
     "@types/node": "^20.11.19",
@@ -33,17 +36,15 @@
     "rollup": "^4.34.8",
     "typescript": "^5.7.3",
     "vite": "^6.1.1",
+    "vue": "^3.3",
     "vue-tsc": "^2.2.0"
   },
-  "engines": {
-    "node": ">=18"
-  },
   "dependencies": {
-    "lkt-button": "^2.0.3",
-    "lkt-i18n": "^1.0.4",
-    "lkt-vue-kernel": "^1.0.21",
-    "process": "^0.11.10",
-    "sass": "^1.57.1",
-    "vue": "^3.2.37"
+    "lkt-button": "^2.0.4",
+    "lkt-i18n": "^1.0.6",
+    "lkt-vue-kernel": "^1.0.22"
+  },
+  "peerDependencies": {
+    "vue": "^3.3"
   }
 }
