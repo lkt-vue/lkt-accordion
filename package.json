@@ -42,7 +42,7 @@
   "dependencies": {
     "lkt-button": "^2.0.4",
     "lkt-i18n": "^1.0.6",
-    "lkt-vue-kernel": "^1.0.22"
+    "lkt-vue-kernel": "^1.0.23"
   },
   "peerDependencies": {
     "vue": "^3.3"
