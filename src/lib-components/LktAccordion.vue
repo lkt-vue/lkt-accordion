@@ -241,8 +241,10 @@ onBeforeUnmount(() => {
                         <component :is="toggleSlot" class="lkt-accordion-toggle-inner"
                                    :class="isOpen ? 'is-opened' : '' "/>
                     </template>
-                    <div v-else class="lkt-accordion-toggle-inner lkt-accordion-toggle-triangle"
-                         :class="isOpen ? 'is-opened' : '' "/>
+                    <div v-else class="lkt-accordion-toggle-inner"
+                         :class="isOpen ? 'is-opened' : '' ">
+                        <i class="lkt-icn-angle-bottom"/>
+                    </div>
                 </div>
             </header>
             <section class="lkt-accordion-content" :style="contentInnerStyle" :class="contentClasses">
