@@ -1,5 +1,5 @@
 declare namespace be {
-    function install(s: any): void;
+    function install(c: any): void;
 }
-declare function Te(s: any): boolean;
+declare function Te(c: any): boolean;
 export { be as default, Te as setAccordionToggleSlot };

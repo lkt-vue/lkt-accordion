@@ -218,14 +218,14 @@ onBeforeUnmount(() => {
                 </div>
 
                 <div class="lkt-accordion-title" v-if="!!slots.header || computedTitle.length > 0">
+                    <i v-if="icon && !iconAtEnd" :class="icon"/>
                     <template v-if="!!slots.header">
                         <slot name="header"/>
                     </template>
                     <template v-else-if="computedTitle.length > 0">
-                        <i v-if="icon && !iconAtEnd" :class="icon"/>
                         {{ computedTitle }}
-                        <i v-if="icon && iconAtEnd" :class="icon"/>
                     </template>
+                    <i v-if="icon && iconAtEnd" :class="icon"/>
                 </div>
 
                 <div class="lkt-accordion-buttons"

@@ -124,17 +124,17 @@ const ve = { class: "lkt-accordion-container" }, ke = {
               }, null, 2))
             ])) : i("", !0),
             v(B).header || w.value.length > 0 ? (n(), l("div", fe, [
-              v(B).header ? T(e.$slots, "header", { key: 0 }) : w.value.length > 0 ? (n(), l(ue, { key: 1 }, [
-                e.icon && !e.iconAtEnd ? (n(), l("i", {
-                  key: 0,
-                  class: s(e.icon)
-                }, null, 2)) : i("", !0),
-                ie(" " + re(w.value) + " ", 1),
-                e.icon && e.iconAtEnd ? (n(), l("i", {
-                  key: 1,
-                  class: s(e.icon)
-                }, null, 2)) : i("", !0)
-              ], 64)) : i("", !0)
+              e.icon && !e.iconAtEnd ? (n(), l("i", {
+                key: 0,
+                class: s(e.icon)
+              }, null, 2)) : i("", !0),
+              v(B).header ? T(e.$slots, "header", { key: 1 }) : w.value.length > 0 ? (n(), l(ue, { key: 2 }, [
+                ie(re(w.value), 1)
+              ], 64)) : i("", !0),
+              e.icon && e.iconAtEnd ? (n(), l("i", {
+                key: 3,
+                class: s(e.icon)
+              }, null, 2)) : i("", !0)
             ])) : i("", !0),
             J.value ? (n(), l("div", pe, [
               N(m, R(e.actionButton, { onClick: Z }), null, 16)
