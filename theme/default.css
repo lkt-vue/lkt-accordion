@@ -1,43 +1,55 @@
 .lkt-accordion {
+    --lkt-accordion--display: flex;
+    --lkt-accordion--flex-direction: column;
+    --lkt-accordion--width: 100%;
+
     /** Font */
-    --lkt-accordion-font-family: system-ui, Helvetica;
-    --lkt-accordion-font-size: 16px;
-    --lkt-accordion-font-weight: 300;
-    --lkt-accordion-line-height: 1.425;
-    --lkt-accordion-text-align: left;
+    --lkt-accordion--font-family: system-ui, Helvetica;
+    --lkt-accordion--font-size: 16px;
+    --lkt-accordion--font-weight: 300;
+    --lkt-accordion--line-height: 1.425;
+    --lkt-accordion--text-align: left;
 
     /** Sizing */
-    --lkt-accordion-min-width: 100%;
-    --lkt-accordion-min-height: 35px;
-    --lkt-accordion-padding: 0;
-    --lkt-accordion-gap: 5px;
+    --lkt-accordion--min-width: 100%;
+    --lkt-accordion--min-height: 35px;
+    --lkt-accordion--padding: 0;
+    --lkt-accordion--gap: 5px;
 
     /** Border */
-    --lkt-accordion-border-radius: 5px;
-    --lkt-accordion-border-width: 1px;
-    --lkt-accordion-border-style: solid;
+    --lkt-accordion--border-radius: 5px;
+    --lkt-accordion--border-width: 1px;
+    --lkt-accordion--border-style: solid;
 
     /** Colors */
-    --lkt-accordion-color: #444444;
-    --lkt-accordion-bg: transparent;
-    --lkt-accordion-border-color: #ddd;
-    --lkt-accordion-header-gap: 15px;
+    --lkt-accordion--color: #444444;
+    --lkt-accordion--background: transparent;
+    --lkt-accordion--border-color: #ddd;
 
     /** Effects */
-    --lkt-accordion-shadow: none;
-    --lkt-accordion-transition: all linear 100ms;
+    --lkt-accordion--shadow: none;
+    --lkt-accordion--transition: all linear 200ms;
 
-    --lkt-accordion-layer-shadow: 1px -20px 23px -10px rgba(0,0,0,0.75) inset;
+    --lkt-accordion--layer--shadow: 1px -20px 23px -10px rgba(0,0,0,0.75) inset;
 
     /** Header styles */
+    --lkt-accordion--header--display: flex;
+    --lkt-accordion--header--align-items: center;
+    --lkt-accordion--header--justify-content: flex-start;
     --lkt-accordion--header--font-weight: 400;
     --lkt-accordion--header--padding: 15px;
     --lkt-accordion--header--border-radius: 5px;
-    --lkt-accordion--header--bg: #ffffff;
+    --lkt-accordion--header--background: #ffffff;
     --lkt-accordion--header--color: #444444;
+    --lkt-accordion--header--gap: 15px;
 
     /** Content styles */
-    --lkt-accordion--content--bg: transparent;
+    --lkt-accordion--content--transition: all linear 200ms;
+    --lkt-accordion--content--background: transparent;
     --lkt-accordion--content--padding: 15px;
     --lkt-accordion--content--border-radius: 5px;
+
+    --lkt-accordion--title--display: flex;
+    --lkt-accordion--title--align-items: center;
+    --lkt-accordion--title--gap: 5px;
 }

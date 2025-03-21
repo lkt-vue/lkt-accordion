@@ -48,12 +48,14 @@ declare const safeToggleButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -61,14 +63,11 @@ declare const safeToggleButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: import("lkt-vue-kernel").LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -76,6 +75,11 @@ declare const safeToggleButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -105,6 +109,10 @@ declare const safeToggleButton: import("vue").Ref<{
         confirmData: import("lkt-vue-kernel").LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: import("lkt-vue-kernel").LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -112,10 +120,13 @@ declare const safeToggleButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: import("lkt-vue-kernel").LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -123,24 +134,24 @@ declare const safeToggleButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: import("lkt-vue-kernel").LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -148,14 +159,11 @@ declare const safeToggleButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: import("lkt-vue-kernel").LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -163,7 +171,7 @@ declare const safeToggleButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: import("lkt-vue-kernel").LktObject | undefined;
@@ -182,6 +190,10 @@ declare const safeToggleButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -191,7 +203,9 @@ declare const safeToggleButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: import("lkt-vue-kernel").LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }, Partial<import("lkt-vue-kernel").ButtonConfig> | {
     type?: import("lkt-vue-kernel").ButtonType | undefined;
     name?: string | undefined;
@@ -237,12 +251,14 @@ declare const safeToggleButton: import("vue").Ref<{
         isActive?: boolean | undefined;
         downloadFileName?: string | undefined;
         disabled?: boolean | undefined;
-        onClick?: Function | undefined;
         confirmModal?: import("lkt-vue-kernel").ValidModalName;
-        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
         confirmData?: {
             [x: string]: any;
             [x: number]: any;
+            modalName?: import("lkt-vue-kernel").ValidModalName;
+            modalKey?: import("lkt-vue-kernel").ValidModalKey;
+            zIndex?: number | undefined;
             type?: import("lkt-vue-kernel").ModalType | undefined;
             size?: string | undefined;
             preTitle?: string | undefined;
@@ -250,14 +266,11 @@ declare const safeToggleButton: import("vue").Ref<{
             title?: string | undefined;
             closeIcon?: string | undefined;
             closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+            closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
             showClose?: boolean | undefined;
             disabledClose?: boolean | undefined;
             disabledVeilClick?: boolean | undefined;
             hiddenFooter?: boolean | undefined;
-            modalName?: import("lkt-vue-kernel").ValidModalName;
-            modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-            zIndex?: number | undefined;
             beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
             item?: import("lkt-vue-kernel").LktObject | undefined;
             confirmButton?: /*elided*/ any | undefined;
@@ -265,6 +278,11 @@ declare const safeToggleButton: import("vue").Ref<{
         } | undefined;
         imposter?: boolean | undefined;
         external?: boolean | undefined;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
+        onClick?: Function | undefined;
     } | {
         type: import("lkt-vue-kernel").AnchorType;
         to?: string | {
@@ -294,6 +312,10 @@ declare const safeToggleButton: import("vue").Ref<{
         confirmData: import("lkt-vue-kernel").LktObject;
         imposter: boolean;
         external: boolean;
+        text?: import("lkt-vue-kernel").ValidTextValue;
+        events?: {
+            click?: Function | undefined;
+        } | undefined;
         getHref: () => string;
         feed: (data?: import("lkt-vue-kernel").LktObject, target?: import("lkt-vue-kernel").Anchor | undefined) => void;
         assignProp: (key: string, value: any) => void;
@@ -301,10 +323,13 @@ declare const safeToggleButton: import("vue").Ref<{
     resource?: string | undefined;
     resourceData?: import("lkt-vue-kernel").LktObject | undefined;
     modal?: import("lkt-vue-kernel").ValidModalName;
-    modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-    modalData?: {
+    modalKey?: import("lkt-vue-kernel").ValidModalKey;
+    modalData?: Function | {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -312,24 +337,24 @@ declare const safeToggleButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: import("lkt-vue-kernel").LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
         cancelButton?: /*elided*/ any | undefined;
     } | undefined;
     confirmModal?: import("lkt-vue-kernel").ValidModalName;
-    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+    confirmModalKey?: import("lkt-vue-kernel").ValidModalKey;
     confirmData?: {
         [x: string]: any;
         [x: number]: any;
+        modalName?: import("lkt-vue-kernel").ValidModalName;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
+        zIndex?: number | undefined;
         type?: import("lkt-vue-kernel").ModalType | undefined;
         size?: string | undefined;
         preTitle?: string | undefined;
@@ -337,14 +362,11 @@ declare const safeToggleButton: import("vue").Ref<{
         title?: string | undefined;
         closeIcon?: string | undefined;
         closeConfirm?: import("lkt-vue-kernel").ValidModalName;
-        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        closeConfirmKey?: import("lkt-vue-kernel").ValidModalKey;
         showClose?: boolean | undefined;
         disabledClose?: boolean | undefined;
         disabledVeilClick?: boolean | undefined;
         hiddenFooter?: boolean | undefined;
-        modalName?: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
-        zIndex?: number | undefined;
         beforeClose?: import("lkt-vue-kernel").ValidBeforeCloseModal;
         item?: import("lkt-vue-kernel").LktObject | undefined;
         confirmButton?: /*elided*/ any | undefined;
@@ -352,7 +374,7 @@ declare const safeToggleButton: import("vue").Ref<{
     } | undefined;
     modalCallbacks?: {
         modalName: import("lkt-vue-kernel").ValidModalName;
-        modalKey?: import("lkt-vue-kernel").ValidModalKey | undefined;
+        modalKey?: import("lkt-vue-kernel").ValidModalKey;
         action: import("lkt-vue-kernel").ModalCallbackAction;
         method?: string | undefined;
         args?: import("lkt-vue-kernel").LktObject | undefined;
@@ -371,6 +393,10 @@ declare const safeToggleButton: import("vue").Ref<{
         referrer?: HTMLElement | undefined;
         locationY?: import("lkt-vue-kernel").TooltipLocationY | undefined;
         locationX?: import("lkt-vue-kernel").TooltipLocationX | undefined;
+        showOnReferrerHover?: boolean | undefined;
+        showOnReferrerHoverDelay?: number | undefined;
+        hideOnReferrerLeave?: boolean | undefined;
+        hideOnReferrerLeaveDelay?: number | undefined;
     } | undefined;
     splitIcon?: string | undefined;
     showTooltipOnHover?: boolean | undefined;
@@ -380,7 +406,9 @@ declare const safeToggleButton: import("vue").Ref<{
     tabindex?: import("lkt-vue-kernel").ValidTabIndex;
     prop?: import("lkt-vue-kernel").LktObject | undefined;
     clickRef?: (Element | import("vue").VueElement) | undefined;
-    onClick?: Function | undefined;
+    events?: {
+        click?: Function | undefined;
+    } | undefined;
 }>;
 declare const classes: import("vue").ComputedRef<string>, contentClasses: import("vue").ComputedRef<string>, contentInnerClasses: import("vue").ComputedRef<string>, contentInnerStyle: import("vue").ComputedRef<string>, computedTitle: import("vue").ComputedRef<any>, hasToggleSlot: import("vue").ComputedRef<boolean>, toggleSlot: import("vue").ComputedRef<string | import("vue").Component>, computedShowActionButton: import("vue").ComputedRef<boolean>, computedShowToggleButton: import("vue").ComputedRef<boolean>, computedCanRenderDefaultSlot: import("vue").ComputedRef<boolean>;
 declare const onClickReadMoreIntro: () => void, onClickUserToggle: () => void, onClickToggleButton: ($event?: PointerEvent | undefined) => void;

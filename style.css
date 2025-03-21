@@ -1,32 +1,32 @@
 .lkt-accordion {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    display: var(--lkt-accordion--display);
+    flex-direction: var(--lkt-accordion--flex-direction);
+    width: var(--lkt-accordion--width);
     cursor: default;
-    gap: var(--lkt-accordion-gap);
-    color: var(--lkt-accordion-color);
-    box-shadow: var(--lkt-accordion-shadow);
-    text-align: var(--lkt-accordion-text-align);
-    transition: var(--lkt-accordion-transition);
-    font-family: var(--lkt-accordion-font-family), serif;
-    font-size: var(--lkt-accordion-font-size);
-    font-weight: var(--lkt-accordion-font-weight);
-    line-height: var(--lkt-accordion-line-height);
-    border-radius: var(--lkt-accordion-border-radius);
-    border-width: var(--lkt-accordion-border-width);
-    border-style: var(--lkt-accordion-border-style);
-    border-color: var(--lkt-accordion-border-color);
-    min-width: var(--lkt-accordion-min-width);
-    min-height: var(--lkt-accordion-min-height);
-    padding: var(--lkt-accordion-padding);
+    gap: var(--lkt-accordion--gap);
+    color: var(--lkt-accordion--color);
+    box-shadow: var(--lkt-accordion--shadow);
+    text-align: var(--lkt-accordion--text-align);
+    transition: var(--lkt-accordion--transition);
+    font-family: var(--lkt-accordion--font-family), serif;
+    font-size: var(--lkt-accordion--font-size);
+    font-weight: var(--lkt-accordion--font-weight);
+    line-height: var(--lkt-accordion--line-height);
+    border-radius: var(--lkt-accordion--border-radius);
+    border-width: var(--lkt-accordion--border-width);
+    border-style: var(--lkt-accordion--border-style);
+    border-color: var(--lkt-accordion--border-color);
+    min-width: var(--lkt-accordion--min-width);
+    min-height: var(--lkt-accordion--min-height);
+    padding: var(--lkt-accordion--padding);
 }
 
 .lkt-accordion-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--lkt-accordion-header-gap);
-    background: var(--lkt-accordion--header--bg);
+    display: var(--lkt-accordion--header--display);
+    align-items: var(--lkt-accordion--header--align-items);
+    justify-content: var(--lkt-accordion--header--justify-content);
+    gap: var(--lkt-accordion--header--gap);
+    background: var(--lkt-accordion--header--background);
     font-weight: var(--lkt-accordion--header--font-weight);
     color: var(--lkt-accordion--header--color);
     padding: var(--lkt-accordion--header--padding);
@@ -67,7 +67,7 @@
 
 .lkt-accordion-content {
     border-radius: var(--lkt-accordion--content--border-radius);
-    background: var(--lkt-accordion--content--bg);
+    background: var(--lkt-accordion--content--background);
 }
 
 .lkt-accordion-content-inner {
@@ -76,13 +76,13 @@
 }
 
 .toggle-mode--height > .lkt-accordion-content {
-    transition: all linear 200ms;
+    transition: var(--lkt-accordion--content--transition);
     height: 0;
     overflow: hidden;
 }
 
 .toggle-mode--transform > .lkt-accordion-content {
-    transition: all linear 200ms;
+    transition: var(--lkt-accordion--content--transition);
     display: none;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .lkt-accordion-blur-layer {
-    box-shadow: var(--lkt-accordion-layer-shadow);
+    box-shadow: var(--lkt-accordion--layer--shadow);
 }
 
 .lkt-accordion-nav {
@@ -115,7 +115,7 @@
 }
 
 .lkt-accordion-title {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    display: var(--lkt-accordion--title--display);
+    align-items: var(--lkt-accordion--title--align-items);
+    gap: var(--lkt-accordion--title--gap);
 }
