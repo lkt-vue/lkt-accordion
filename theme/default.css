@@ -4,6 +4,7 @@
     --lkt-accordion--border-radius: 5px;
     --lkt-accordion--border-style: solid;
     --lkt-accordion--border-width: 1px;
+    --lkt-accordion--box-shadow: none;
     --lkt-accordion--color: #444444;
     --lkt-accordion--display: flex;
     --lkt-accordion--flex-direction: column;
@@ -15,13 +16,12 @@
     --lkt-accordion--min-height: 35px;
     --lkt-accordion--min-width: 100%;
     --lkt-accordion--padding: 0;
-    --lkt-accordion--shadow: none;
     --lkt-accordion--text-align: left;
     --lkt-accordion--transition: all linear 200ms;
     --lkt-accordion--width: 100%;
 
     /** Element: Layer */
-    --lkt-accordion--layer--shadow: 1px -20px 23px -10px rgba(0,0,0,0.75) inset;
+    --lkt-accordion--layer--box-shadow: 1px -20px 23px -10px rgba(0,0,0,0.75) inset;
 
     /** Element: Header */
     --lkt-accordion--header--align-items: center;

@@ -5,7 +5,7 @@
     cursor: default;
     gap: var(--lkt-accordion--gap);
     color: var(--lkt-accordion--color);
-    box-shadow: var(--lkt-accordion--shadow);
+    box-shadow: var(--lkt-accordion--box-shadow);
     text-align: var(--lkt-accordion--text-align);
     transition: var(--lkt-accordion--transition);
     font-family: var(--lkt-accordion--font-family), serif;
@@ -105,7 +105,7 @@
 }
 
 .lkt-accordion-blur-layer {
-    box-shadow: var(--lkt-accordion--layer--shadow);
+    box-shadow: var(--lkt-accordion--layer--box-shadow);
 }
 
 .lkt-accordion-nav {
