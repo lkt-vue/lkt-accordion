@@ -1,10 +1,10 @@
-import { defineComponent as ee, mergeDefaults as te, useSlots as oe, ref as r, watch as b, computed as u, onMounted as M, nextTick as ne, onBeforeUnmount as le, resolveComponent as ae, createElementBlock as l, openBlock as n, createElementVNode as y, createCommentVNode as i, normalizeClass as s, unref as v, createBlock as j, resolveDynamicComponent as D, renderSlot as T, Fragment as ue, createTextVNode as ie, toDisplayString as re, createVNode as N, mergeProps as R, normalizeStyle as se } from "vue";
+import { defineComponent as ee, mergeDefaults as te, useSlots as oe, ref as r, watch as b, computed as u, onMounted as M, nextTick as ne, onBeforeUnmount as le, resolveComponent as ae, createElementBlock as l, openBlock as n, normalizeClass as s, createElementVNode as y, createCommentVNode as i, unref as v, createBlock as j, resolveDynamicComponent as D, renderSlot as T, Fragment as ue, createTextVNode as ie, toDisplayString as re, createVNode as N, mergeProps as R, normalizeStyle as se } from "vue";
 import { ensureButtonConfig as $, LktSettings as U, extractI18nValue as ce, AccordionType as k, getDefaultValues as de, Accordion as ge } from "lkt-vue-kernel";
 const A = class A {
 };
 A.toggleSlot = "", A.debugEnabled = !1;
 let h = A;
-const ve = { class: "lkt-accordion-container" }, ke = {
+const ve = { class: "lkt-accordion-main" }, ke = {
   key: 0,
   class: "lkt-accordion-toggle"
 }, fe = {
@@ -106,10 +106,10 @@ const ve = { class: "lkt-accordion-container" }, ke = {
       typeof C.value != "undefined" && C.value !== null && C.value.disconnect(), window.removeEventListener("resize", p);
     }), (e, a) => {
       const m = ae("lkt-button");
-      return n(), l("div", ve, [
-        y("div", {
-          class: s(["lkt-accordion", q.value])
-        }, [
+      return n(), l("div", {
+        class: s(["lkt-accordion", q.value])
+      }, [
+        y("div", ve, [
           y("header", {
             class: "lkt-accordion-header",
             onClick: X
@@ -170,7 +170,7 @@ const ve = { class: "lkt-accordion-container" }, ke = {
               v(B).lazy && g.value ? T(e.$slots, "lazy", { key: 1 }) : Q.value ? T(e.$slots, "default", { key: 2 }) : i("", !0)
             ], 2)
           ], 6)
-        ], 2),
+        ]),
         K.value ? (n(), l("nav", ye, [
           N(m, R(L.value, {
             checked: o.value,
@@ -178,7 +178,7 @@ const ve = { class: "lkt-accordion-container" }, ke = {
             onClick: Y
           }), null, 16, ["checked"])
         ])) : i("", !0)
-      ]);
+      ], 2);
     };
   }
 }), be = {

@@ -205,8 +205,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="lkt-accordion-container">
-        <div class="lkt-accordion" :class="classes">
+    <div class="lkt-accordion" :class="classes">
+        <div class="lkt-accordion-main">
             <header class="lkt-accordion-header" @click="onClickUserToggle">
                 <div class="lkt-accordion-toggle" v-if="!toggleIconAtEnd && props.type !== AccordionType.Always">
                     <template v-if="hasToggleSlot">

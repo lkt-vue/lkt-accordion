@@ -1,11 +1,8 @@
 .lkt-accordion {
-    display: var(--lkt-accordion--display);
-    flex-direction: var(--lkt-accordion--flex-direction);
     width: var(--lkt-accordion--width);
     cursor: default;
     gap: var(--lkt-accordion--gap);
     color: var(--lkt-accordion--color);
-    box-shadow: var(--lkt-accordion--box-shadow);
     text-align: var(--lkt-accordion--text-align);
     transition: var(--lkt-accordion--transition);
     font-family: var(--lkt-accordion--font-family), serif;
@@ -17,6 +14,12 @@
     border-style: var(--lkt-accordion--border-style);
     border-color: var(--lkt-accordion--border-color);
     min-width: var(--lkt-accordion--min-width);
+}
+
+.lkt-accordion {
+    display: var(--lkt-accordion--display);
+    flex-direction: var(--lkt-accordion--flex-direction);
+    box-shadow: var(--lkt-accordion--box-shadow);
     min-height: var(--lkt-accordion--min-height);
     padding: var(--lkt-accordion--padding);
 }
@@ -75,32 +78,32 @@
     border-radius: var(--lkt-accordion--content--border-radius);
 }
 
-.toggle-mode--height > .lkt-accordion-content {
+.toggle-mode--height > .lkt-accordion-main .lkt-accordion-content {
     transition: var(--lkt-accordion--content--transition);
     height: 0;
     overflow: hidden;
 }
 
-.toggle-mode--transform > .lkt-accordion-content {
+.toggle-mode--transform > .lkt-accordion-main .lkt-accordion-content {
     transition: var(--lkt-accordion--content--transition);
     display: none;
 }
 
-.toggle-mode--transform > .lkt-accordion-content .lkt-accordion-content-inner {
+.toggle-mode--transform > .lkt-accordion-main .lkt-accordion-content .lkt-accordion-content-inner {
     transform: scaleY(0);
     transform-origin: top;
     transition: transform 0.26s ease;
 }
 
-.toggle-mode--transform > .lkt-accordion-content .lkt-accordion-content-inner.is-opened {
+.toggle-mode--transform > .lkt-accordion-main .lkt-accordion-content .lkt-accordion-content-inner.is-opened {
     transform: scaleY(1);
 }
 
-.toggle-mode--display > .lkt-accordion-content .lkt-accordion-content-inner {
+.toggle-mode--display > .lkt-accordion-main .lkt-accordion-content .lkt-accordion-content-inner {
     display: none;
 }
 
-.toggle-mode--display > .lkt-accordion-content .lkt-accordion-content-inner.is-opened {
+.toggle-mode--display > .lkt-accordion-main .lkt-accordion-content .lkt-accordion-content-inner.is-opened {
     display: block;
 }
 
