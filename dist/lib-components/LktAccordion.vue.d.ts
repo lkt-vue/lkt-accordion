@@ -414,7 +414,7 @@ declare const classes: import("vue").ComputedRef<string>, contentClasses: import
 declare const onClickReadMoreIntro: () => void, onClickUserToggle: () => void, onClickToggleButton: ($event?: PointerEvent | undefined) => void;
 declare const onClickActionButton: () => void;
 declare const __VLS_ctx: InstanceType<__VLS_PickNotAny<typeof __VLS_self, new () => {}>>;
-declare var __VLS_5: {}, __VLS_19: {}, __VLS_21: {}, __VLS_23: {};
+declare var __VLS_5: {}, __VLS_19: {}, __VLS_21: {}, __VLS_23: {}, __VLS_33: {};
 type __VLS_Slots = __VLS_PrettifyGlobal<__VLS_OmitStringIndex<typeof __VLS_ctx.$slots> & {
     header?: (props: typeof __VLS_5) => any;
 } & {
@@ -423,6 +423,8 @@ type __VLS_Slots = __VLS_PrettifyGlobal<__VLS_OmitStringIndex<typeof __VLS_ctx.$
     lazy?: (props: typeof __VLS_21) => any;
 } & {
     default?: (props: typeof __VLS_23) => any;
+} & {
+    'web-element-actions'?: (props: typeof __VLS_33) => any;
 }>;
 declare const __VLS_self: import("vue").DefineComponent<AccordionConfig, {
     AccordionType: typeof AccordionType;

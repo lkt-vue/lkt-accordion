@@ -1,9 +1,9 @@
-import { defineComponent as ee, mergeDefaults as te, useSlots as oe, ref as r, watch as b, computed as u, onMounted as M, nextTick as ne, onBeforeUnmount as le, resolveComponent as ae, createElementBlock as l, openBlock as n, normalizeClass as s, createElementVNode as y, createCommentVNode as i, unref as v, createBlock as j, resolveDynamicComponent as D, renderSlot as T, Fragment as ue, createTextVNode as ie, toDisplayString as re, createVNode as N, mergeProps as R, normalizeStyle as se } from "vue";
-import { ensureButtonConfig as $, LktSettings as U, extractI18nValue as ce, AccordionType as k, getDefaultValues as de, Accordion as ge } from "lkt-vue-kernel";
+import { defineComponent as ee, mergeDefaults as te, useSlots as oe, ref as s, watch as T, computed as i, onMounted as M, nextTick as ne, onBeforeUnmount as le, resolveComponent as ae, createElementBlock as l, openBlock as n, normalizeClass as r, createElementVNode as h, createCommentVNode as a, renderSlot as B, unref as c, createBlock as $, resolveDynamicComponent as j, Fragment as ue, createTextVNode as ie, toDisplayString as se, createVNode as D, mergeProps as N, normalizeStyle as re } from "vue";
+import { ensureButtonConfig as R, LktSettings as U, extractI18nValue as ce, AccordionType as k, getDefaultValues as de, Accordion as ge } from "lkt-vue-kernel";
 const A = class A {
 };
 A.toggleSlot = "", A.debugEnabled = !1;
-let h = A;
+let C = A;
 const ve = { class: "lkt-accordion-main" }, ke = {
   key: 0,
   class: "lkt-accordion-toggle"
@@ -44,23 +44,23 @@ const ve = { class: "lkt-accordion-main" }, ke = {
     "click-action-button",
     "user-toggle"
   ],
-  setup(c, { emit: _ }) {
-    const f = _, B = oe(), t = c, o = r(t.modelValue), S = r(t.modelValue), d = r(null), C = r(null), I = r(0), g = r(!1), H = r(""), E = r(!1), L = r($(t.toggleButton, U.defaultToggleButton));
-    b(() => t.toggleButton, (e) => {
-      L.value = $(e, U.defaultToggleButton);
+  setup(d, { emit: _ }) {
+    const f = _, p = oe(), t = d, o = s(t.modelValue), S = s(t.modelValue), g = s(null), b = s(null), w = s(0), v = s(!1), H = s(""), I = s(!1), L = s(R(t.toggleButton, U.defaultToggleButton));
+    T(() => t.toggleButton, (e) => {
+      L.value = R(e, U.defaultToggleButton);
     }, { deep: !0 });
-    const q = u(() => {
-      var a;
+    const q = i(() => {
+      var u;
       let e = [];
-      return t.class && e.push(t.class), o.value && e.push("is-open"), (a = t.toggleButton) != null && a.iconEnd && e.push("icon-at-end"), t.toggleMode && e.push(`toggle-mode--${t.toggleMode}`), t.iconRotation && e.push(`icon-rotation--${t.iconRotation}`), e.join(" ");
-    }), F = u(() => {
+      return t.class && e.push(t.class), o.value && e.push("is-open"), (u = t.toggleButton) != null && u.iconEnd && e.push("icon-at-end"), t.toggleMode && e.push(`toggle-mode--${t.toggleMode}`), t.iconRotation && e.push(`icon-rotation--${t.iconRotation}`), e.join(" ");
+    }), F = i(() => {
       let e = [];
-      return E.value && !o.value && e.push("lkt-accordion-blur-layer"), e.join(" ");
-    }), P = u(() => {
+      return I.value && !o.value && e.push("lkt-accordion-blur-layer"), e.join(" ");
+    }), P = i(() => {
       let e = [];
       return t.contentClass && e.push(t.contentClass), o.value && S.value && e.push("is-opened"), e.join(" ");
-    }), G = u(() => !o.value && typeof t.minHeight == "undefined" ? "" : H.value), w = u(() => ce(t.title)), O = u(() => !!h.toggleSlot), z = u(() => h.toggleSlot), J = u(() => typeof t.actionButton != "undefined" && Object.keys(t.actionButton).length > 0), K = u(() => typeof t.toggleButton != "undefined" && Object.keys(t.toggleButton).length > 0), Q = u(() => t.type === k.Lazy ? g.value : t.type === k.Ever ? o.value : !0), V = (e = !1) => {
-      t.type !== k.Always && (!o.value && !g.value && (g.value = !0), e || (o.value = !o.value), p());
+    }), G = i(() => !o.value && typeof t.minHeight == "undefined" ? "" : H.value), E = i(() => ce(t.title)), O = i(() => !!C.toggleSlot), z = i(() => C.toggleSlot), J = i(() => typeof t.actionButton != "undefined" && Object.keys(t.actionButton).length > 0), K = i(() => typeof t.toggleButton != "undefined" && Object.keys(t.toggleButton).length > 0), Q = i(() => t.type === k.Lazy ? v.value : t.type === k.Ever ? o.value : !0), V = (e = !1) => {
+      t.type !== k.Always && (!o.value && !v.value && (v.value = !0), e || (o.value = !o.value), m());
     }, W = () => {
       t.toggleOnClickIntro && V();
     }, X = () => {
@@ -68,124 +68,125 @@ const ve = { class: "lkt-accordion-main" }, ke = {
     }, Y = (e) => {
       e && (V(!0), f("user-toggle", o.value));
     };
-    b(() => t.modelValue, (e) => o.value = e), b(o, (e) => {
-      e ? (I.value = d.value.clientHeight, setTimeout(() => {
+    T(() => t.modelValue, (e) => o.value = e), T(o, (e) => {
+      e ? (w.value = g.value.clientHeight, setTimeout(() => {
         S.value = !0;
-      }, 1)) : (I.value = Number(t.minHeight), setTimeout(() => {
+      }, 1)) : (w.value = Number(t.minHeight), setTimeout(() => {
         S.value = !0;
       }, 1)), f("update:modelValue", e);
-    }), b(g, () => f("first-open"));
+    }), T(v, () => f("first-open"));
     const Z = () => {
       var e;
       f("click-action-button", (e = t.actionButton) == null ? void 0 : e.resourceData);
-    }, p = () => {
-      if (t.toggleMode === "display" || (E.value = !1, !d.value)) return;
-      let e = d.value.offsetHeight, a = Number(t.minHeight), m = e;
-      !o.value && a < e && (m = a, E.value = !0), H.value = [
+    }, m = () => {
+      if (t.toggleMode === "display" || (I.value = !1, !g.value)) return;
+      let e = g.value.offsetHeight, u = Number(t.minHeight), y = e;
+      !o.value && u < e && (y = u, I.value = !0), H.value = [
         "display: block",
-        "height: " + m + "px"
+        "height: " + y + "px"
       ].join(";");
     };
     return M(() => {
-      t.type === k.Always && !o.value && (o.value = !0), o.value && (g.value = !0), ne(() => {
-        I.value = d.value.clientHeight;
+      t.type === k.Always && !o.value && (o.value = !0), o.value && (v.value = !0), ne(() => {
+        w.value = g.value.clientHeight;
         const e = new MutationObserver(() => {
           setTimeout(() => {
-            p();
+            m();
           }, t.toggleTimeout);
         });
-        e.observe(d.value, {
+        e.observe(g.value, {
           childList: !0,
           subtree: !0,
           attributes: !0
-        }), C.value = e, p();
+        }), b.value = e, m();
       });
     }), M(() => {
-      window.addEventListener("resize", p);
+      window.addEventListener("resize", m);
     }), le(() => {
-      typeof C.value != "undefined" && C.value !== null && C.value.disconnect(), window.removeEventListener("resize", p);
-    }), (e, a) => {
-      const m = ae("lkt-button");
+      typeof b.value != "undefined" && b.value !== null && b.value.disconnect(), window.removeEventListener("resize", m);
+    }), (e, u) => {
+      const y = ae("lkt-button");
       return n(), l("div", {
-        class: s(["lkt-accordion", q.value])
+        class: r(["lkt-accordion", q.value])
       }, [
-        y("div", ve, [
-          y("header", {
+        h("div", ve, [
+          h("header", {
             class: "lkt-accordion-header",
             onClick: X
           }, [
-            !e.toggleIconAtEnd && t.type !== v(k).Always ? (n(), l("div", ke, [
-              O.value ? (n(), j(D(z.value), {
+            !e.toggleIconAtEnd && t.type !== c(k).Always ? (n(), l("div", ke, [
+              O.value ? (n(), $(j(z.value), {
                 key: 0,
-                class: s(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
+                class: r(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
               }, null, 8, ["class"])) : (n(), l("div", {
                 key: 1,
-                class: s(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", o.value ? "is-opened" : ""])
+                class: r(["lkt-accordion-toggle-inner lkt-accordion-toggle-triangle", o.value ? "is-opened" : ""])
               }, null, 2))
-            ])) : i("", !0),
-            v(B).header || w.value.length > 0 ? (n(), l("div", fe, [
+            ])) : a("", !0),
+            c(p).header || E.value.length > 0 ? (n(), l("div", fe, [
               e.icon && !e.iconAtEnd ? (n(), l("i", {
                 key: 0,
-                class: s(e.icon)
-              }, null, 2)) : i("", !0),
-              v(B).header ? T(e.$slots, "header", { key: 1 }) : w.value.length > 0 ? (n(), l(ue, { key: 2 }, [
-                ie(re(w.value), 1)
-              ], 64)) : i("", !0),
+                class: r(e.icon)
+              }, null, 2)) : a("", !0),
+              c(p).header ? B(e.$slots, "header", { key: 1 }) : E.value.length > 0 ? (n(), l(ue, { key: 2 }, [
+                ie(se(E.value), 1)
+              ], 64)) : a("", !0),
               e.icon && e.iconAtEnd ? (n(), l("i", {
                 key: 3,
-                class: s(e.icon)
-              }, null, 2)) : i("", !0)
-            ])) : i("", !0),
+                class: r(e.icon)
+              }, null, 2)) : a("", !0)
+            ])) : a("", !0),
             J.value ? (n(), l("div", pe, [
-              N(m, R(e.actionButton, { onClick: Z }), null, 16)
-            ])) : i("", !0),
-            e.toggleIconAtEnd && t.type !== v(k).Always ? (n(), l("div", me, [
-              O.value ? (n(), j(D(z.value), {
+              D(y, N(e.actionButton, { onClick: Z }), null, 16)
+            ])) : a("", !0),
+            e.toggleIconAtEnd && t.type !== c(k).Always ? (n(), l("div", me, [
+              O.value ? (n(), $(j(z.value), {
                 key: 0,
-                class: s(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
+                class: r(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
               }, null, 8, ["class"])) : (n(), l("div", {
                 key: 1,
-                class: s(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
-              }, a[1] || (a[1] = [
-                y("i", { class: "lkt-icn-angle-bottom" }, null, -1)
+                class: r(["lkt-accordion-toggle-inner", o.value ? "is-opened" : ""])
+              }, u[1] || (u[1] = [
+                h("i", { class: "lkt-icn-angle-bottom" }, null, -1)
               ]), 2))
-            ])) : i("", !0)
+            ])) : a("", !0)
           ]),
-          y("section", {
-            class: s(["lkt-accordion-content", F.value]),
-            style: se(G.value)
+          h("section", {
+            class: r(["lkt-accordion-content", F.value]),
+            style: re(G.value)
           }, [
-            y("div", {
-              class: s(["lkt-accordion-content-inner", P.value]),
+            h("div", {
+              class: r(["lkt-accordion-content-inner", P.value]),
               ref_key: "contentInner",
-              ref: d
+              ref: g
             }, [
-              v(B).intro ? (n(), l("section", {
+              c(p).intro ? (n(), l("section", {
                 key: 0,
                 class: "lkt-accordion-read-more-intro",
                 onClick: W
               }, [
-                T(e.$slots, "intro")
-              ])) : i("", !0),
-              v(B).lazy && g.value ? T(e.$slots, "lazy", { key: 1 }) : Q.value ? T(e.$slots, "default", { key: 2 }) : i("", !0)
+                B(e.$slots, "intro")
+              ])) : a("", !0),
+              c(p).lazy && v.value ? B(e.$slots, "lazy", { key: 1 }) : Q.value ? B(e.$slots, "default", { key: 2 }) : a("", !0)
             ], 2)
           ], 6)
         ]),
         K.value ? (n(), l("nav", ye, [
-          N(m, R(L.value, {
+          D(y, N(L.value, {
             checked: o.value,
-            "onUpdate:checked": a[0] || (a[0] = (x) => o.value = x),
+            "onUpdate:checked": u[0] || (u[0] = (x) => o.value = x),
             onClick: Y
           }), null, 16, ["checked"])
-        ])) : i("", !0)
+        ])) : a("", !0),
+        c(p)["web-element-actions"] ? B(e.$slots, "web-element-actions", { key: 1 }) : a("", !0)
       ], 2);
     };
   }
 }), be = {
-  install: (c) => {
-    c.component("lkt-accordion") === void 0 && c.component("lkt-accordion", he);
+  install: (d) => {
+    d.component("lkt-accordion") === void 0 && d.component("lkt-accordion", he);
   }
-}, Te = (c) => (h.toggleSlot = c, !0);
+}, Te = (d) => (C.toggleSlot = d, !0);
 export {
   be as default,
   Te as setAccordionToggleSlot
